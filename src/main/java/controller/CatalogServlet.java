@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CatalogDAOImpl;
+import dao.ItemDAOImpl;
 import model.Brand;
 import model.Category;
 import model.Item;
@@ -38,7 +38,7 @@ public class CatalogServlet extends HttpServlet {
 		// TODO Auto-generated method stub
     	// get author selections from index.html, and search for the books, get a arraylist of books
 		
-		CatalogDAOImpl itemList = new CatalogDAOImpl();
+		ItemDAOImpl itemList = new ItemDAOImpl();
 		
 		// TESTING DAO IMPLEMENTATION (TO BE REMOVED)
 		List<Item> items1 = itemList.findAllItems();

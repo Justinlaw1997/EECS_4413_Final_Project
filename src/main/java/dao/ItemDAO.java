@@ -6,7 +6,7 @@ import model.Brand;
 import model.Category;
 import model.Item;
 
-public interface CatalogDAO {
+public interface ItemDAO {
 
 	public List<Item> findAllItems();
 	

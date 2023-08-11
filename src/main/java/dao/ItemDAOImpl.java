@@ -14,7 +14,7 @@ import model.Brand;
 import model.Category;
 import model.Item;
 
-public class CatalogDAOImpl implements CatalogDAO {
+public class ItemDAOImpl implements ItemDAO {
 	
 	static {
 		try {
@@ -41,8 +41,8 @@ public class CatalogDAOImpl implements CatalogDAO {
 	@Override
 	public List<Item> findAllItems() {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item";
-		queryItems(query, result);
+		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id;";
+		queryItems(query, result);;
 		return result;
 	}
 
@@ -73,7 +73,7 @@ public class CatalogDAOImpl implements CatalogDAO {
 	@Override
 	public List<Item> findItemsByCategory(String category) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id WHERE Category.name='" + category + "'";
+		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Category.name='" + category + "';";
 		queryItems(query, result);
 		return result;
 	}
@@ -81,7 +81,7 @@ public class CatalogDAOImpl implements CatalogDAO {
 	@Override
 	public List<Item> findItemsByBrand(String brand) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Brand ON Item.brand = Brand.id WHERE Brand.name='" + brand + "'";
+		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Brand.name='" + brand + "';";
 		queryItems(query, result);
 		return result;
 	}
@@ -147,16 +147,22 @@ public class CatalogDAOImpl implements CatalogDAO {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			
-			while(resultSet.next()) {			
-				String id = resultSet.getString("itemID");
-				String name = resultSet.getString("name");
+			while(resultSet.next()) {		
+				int categoryId = resultSet.getInt(8);
+				String categoryName = resultSet.getString(9);
+				Category category = new Category(categoryId, categoryName);
+				
+				int brandId = resultSet.getInt(10);
+				String brandName = resultSet.getString(11);
+				Brand brand = new Brand(brandId, brandName);
+				
+				String itemId = resultSet.getString("itemID");
+				String itemName = resultSet.getString("name");
 				String description = resultSet.getString("description");
-				String cat = resultSet.getString("category");
-				String brand = resultSet.getString("brand");
 				int price = resultSet.getInt("price");
 				int quantity = resultSet.getInt("quantity");
-				
-				Item item = new Item(id, name, description, cat, brand, price, quantity);				
+
+				Item item = new Item(itemId, itemName, description, category, brand, price, quantity);				
 				result.add(item);
 			}
 			
