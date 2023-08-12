@@ -35,6 +35,14 @@ public class OrderDAOImpl implements OrderDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public Order findOrderById(int id) {
+		List<Order> result = new ArrayList<Order>();
+		String query = "SELECT * FROM 'Order' WHERE id = " + id + ";";
+		queryOrders(query, result);
+		return result.isEmpty()? null : result.get(0);
+	}
 
 	@Override
 	public List<Order> findAllOrders() {
@@ -93,11 +101,12 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			connection = getConnection();
 			
-			String orderSQL = "INSERT into 'Order' VALUES (?, ?, ?)";
+			String orderSQL = "INSERT into 'Order' VALUES (?, ?, ?, ?)";
 			PreparedStatement orderStatement = connection.prepareStatement(orderSQL);
 			orderStatement.setInt(1, order.getId());
 			orderStatement.setInt(2, order.getCustomer().getId());
 			orderStatement.setString(3, order.getDateOfPurchase());
+			orderStatement.setInt(4, order.getTotal());
 			orderStatement.execute();
 			
 			for(Item item: order.getItems()) {
@@ -106,6 +115,12 @@ public class OrderDAOImpl implements OrderDAO {
 				itemStatement.setString(1, item.getItemID());
 				itemStatement.setInt(2, order.getId());
 				itemStatement.execute();
+				
+				// Reduce quantity of purchased items
+				int quantity = item.getQuantity();
+				quantity -= 1;
+				Statement update = connection.createStatement();
+				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + item.getItemID() + "';");
 			}
 			
 		} catch (SQLException e) {
@@ -116,13 +131,22 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	@Override
-	public void deleteOrder(Order order) {
+	public void deleteOrder(int id) {
+		Order order = findOrderById(id);
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("DELETE FROM 'Order' WHERE id = " + order.getId() + ";");
-			statement.executeUpdate("DELETE FROM 'ItemOrder' WHERE orderId = " + order.getId() + ";");
+			statement.executeUpdate("DELETE FROM 'Order' WHERE id = " + id + ";");
+			statement.executeUpdate("DELETE FROM 'ItemOrder' WHERE orderId = " + id + ";");
+
+			// Re-stock cancelled items
+			for(Item item: order.getItems()) {				
+				int quantity = item.getQuantity();
+				quantity += 1;
+				Statement update = connection.createStatement();
+				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + item.getItemID() + "';");
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -145,6 +169,7 @@ public class OrderDAOImpl implements OrderDAO {
 				int orderId = resultSet.getInt("id");
 				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
+				int total = resultSet.getInt("total");
 				List<Item> items = new ArrayList<Item>();
 
 				// Get the list of items associated with the order
@@ -155,7 +180,7 @@ public class OrderDAOImpl implements OrderDAO {
 					items.add(item);
 				}
 						
-				Order order = new Order(orderId, user, date, items);				
+				Order order = new Order(orderId, user, date, total, items);				
 				result.add(order);
 			}
 			

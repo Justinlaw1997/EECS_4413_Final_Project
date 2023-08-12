@@ -6,6 +6,8 @@ import model.Order;
 
 public interface OrderDAO {
 	
+	public Order findOrderById(int id);
+	
 	public List<Order> findAllOrders();
 	
 	public List<Order> findAllOrdersByCustomer(int customerId);
@@ -20,6 +22,6 @@ public interface OrderDAO {
 	
 	public void createOrder(Order order);
 	
-	public void deleteOrder(Order order);
+	public void deleteOrder(int id);
 	
 }
