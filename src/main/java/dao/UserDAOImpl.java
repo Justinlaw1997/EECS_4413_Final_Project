@@ -61,6 +61,14 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
+	public User findUserById(int id) {
+		List<User> result = new ArrayList<User>();		
+		String query = "SELECT * FROM User INNER JOIN Address ON User.addressID = Address.id WHERE User.id ='" + id + "';";
+		queryUsers(query, result);
+		return result.isEmpty()? null : result.get(0);
+	}
+	
+	@Override
 	public String signIn(String email, String password) {
 		String result = "";
 		Connection connection = null;
@@ -75,7 +83,6 @@ public class UserDAOImpl implements UserDAO {
 			}						
 			
 			// Check if password is correct
-
 			else if (!resultSet.getString("password").equals(password)) {
 				result = "incorrect password";
 			}
