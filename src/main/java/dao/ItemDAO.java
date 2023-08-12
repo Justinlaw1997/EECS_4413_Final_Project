@@ -7,6 +7,8 @@ import model.Category;
 import model.Item;
 
 public interface ItemDAO {
+	
+	public Item findItemById(String id);
 
 	public List<Item> findAllItems();
 	

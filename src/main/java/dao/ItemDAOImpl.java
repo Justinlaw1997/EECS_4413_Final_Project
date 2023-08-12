@@ -39,6 +39,15 @@ public class ItemDAOImpl implements ItemDAO {
 	}
 	
 	@Override
+	public Item findItemById(String id) {
+		List<Item> result = new ArrayList<Item>();		
+		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id " + 
+				"WHERE Item.itemID = '" + id + "';";
+		queryItems(query, result);;
+		return result.isEmpty()? null : result.get(0);
+	}
+	
+	@Override
 	public List<Item> findAllItems() {
 		List<Item> result = new ArrayList<Item>();		
 		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id;";
