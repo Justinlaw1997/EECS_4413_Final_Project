@@ -2,9 +2,9 @@ package controller;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,14 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.ItemDAOImpl;
-import dao.OrderDAOImpl;
-import dao.UserDAOImpl;
-import model.Address;
 import model.Brand;
 import model.Category;
 import model.Item;
-import model.Order;
-import model.User;
 
 /**
  * Servlet implementation class CatalogServlet
@@ -43,7 +38,50 @@ public class CatalogServlet extends HttpServlet {
 		// TODO Auto-generated method stub
     	// get author selections from index.html, and search for the books, get a arraylist of books
 		
-		ItemDAOImpl itemList = new ItemDAOImpl();
+		ItemDAOImpl dao = new ItemDAOImpl();
+		
+		// The returned list of items
+		List<Item> allItemsList;
+		
+		String sort = request.getParameter("sort");
+
+		// Determines what items to return to the allItemsList by the chosen sort button
+		if (sort == null) {
+			allItemsList = dao.findAllItems();
+		} else if (sort.equals("Prices: Ascending")) {
+			allItemsList = dao.SortItemsByAscendingPrice();
+
+		} else if (sort.equals("Prices: Descending")) {
+			allItemsList = dao.SortItemsByDescendingPrice();
+
+		} else if (sort.equals("Names: Alphabetically")) {
+			allItemsList = dao.SortItemsByAlphabeticalOrder();
+
+		} else if (sort.equals("Submit: Category")) {
+			String chosenCategory = request.getParameter("categories");
+			allItemsList = dao.findItemsByCategory(chosenCategory);
+			
+		} else if (sort.equals("Submit: Brand")) {
+			String chosenBrand = request.getParameter("brands");
+			allItemsList = dao.findItemsByBrand(chosenBrand);
+			
+		} else {
+			allItemsList = dao.findAllItems();
+		}
+		
+		// Grab categories
+		List<Category> categories = dao.findAllCategories();
+		
+		// Grab brands
+		List<Brand> brands = dao.findAllBrands();
+		
+		request.setAttribute("allItemsList", allItemsList);
+		request.setAttribute("categories", categories);
+		request.setAttribute("brands", brands);
+
+    	
+    	RequestDispatcher rd = request.getRequestDispatcher("CatalogView.jsp");
+		rd.forward(request, response);
 	}
 
 	/**
