@@ -7,13 +7,15 @@ public class Order {
 	private int id;
 	private User customer;
 	private String dateOfPurchase;
+	private int total;
 	private List<Item> items;
 	
-	public Order(int id, User customer, String dateOfPurchase, List<Item> items) {
+	public Order(int id, User customer, String dateOfPurchase, int total, List<Item> items) {
 		super();
 		this.id = id;
 		this.customer = customer;
 		this.items = items;
+		this.total = total;
 		this.dateOfPurchase = dateOfPurchase;
 	}
 	
@@ -41,7 +43,14 @@ public class Order {
 		this.dateOfPurchase = dateOfPurchase;
 	}
 	
-	
+	public int getTotal() {
+		return total;
+	}
+
+	public void setTotal(int total) {
+		this.total = total;
+	}
+
 	public List<Item> getItems() {
 		return items;
 	}
@@ -52,7 +61,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", customer=" + customer + ", dateOfPurchase=" + dateOfPurchase + ", items=" + items
-				+ "]";
-	}	
+		return "Order [id=" + id + ", customer=" + customer + ", dateOfPurchase=" + dateOfPurchase + ", total=" + total
+				+ ", items=" + items + "]";
+	}
 }
