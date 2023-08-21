@@ -53,6 +53,7 @@
 			        <th>Category</th>
 			        <th>Brand</th>
 			        <th>Price</th>
+			        <th>Quantity</th>
 		        </tr>
 	
 	

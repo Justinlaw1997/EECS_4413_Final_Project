@@ -1,4 +1,4 @@
-
+package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.ItemDAOImpl;
+import dao.*;
 import model.*;
 
 /**
@@ -68,7 +68,7 @@ public class CartServlet extends HttpServlet {
 		     }
 		     for (String id : ids) {
 		    	
-		    	 ItemDAOImpl dao = new ItemDAOImpl();
+		    	 ItemDAO dao = new ItemDAOImpl();
 		    	 Item it  = dao.findItemById(id);
 		    	 it.setQuantity(Integer.parseInt(request.getParameter("qty" + id)));
 
@@ -164,7 +164,7 @@ public class CartServlet extends HttpServlet {
 				session.setAttribute("totalPrice", totalPrice);
 	         }
 	         
-	         out.println("<p><a href='index.html'>Select More Books...</a></p>");
+	         out.println("<p><a href='/EECS4413FinalProjectJLI//CatalogServlet'>Continue shopping...</a></p>");
 	 
 	         // Display the Checkout
 	         if (!cart.isEmpty()) {
