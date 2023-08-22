@@ -21,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leah\\Downloads\\teamJIL.db");
+		return DriverManager.getConnection("jdbc:sqlite:teamJIL.db");
 	}
 	
 	private void closeConnection(Connection connection) {
