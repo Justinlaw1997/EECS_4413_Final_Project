@@ -21,7 +21,25 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:teamJIL.db");
+		Connection con = null;
+		if (System.getProperty("RDS_HOSTNAME") != null) {
+		      try {
+		      Class.forName("org.postgresql.Driver");
+		      String dbName = System.getProperty("RDS_DB_NAME");
+		      String userName = System.getProperty("RDS_USERNAME");
+		      String password = System.getProperty("RDS_PASSWORD");
+		      String hostname = System.getProperty("RDS_HOSTNAME");
+		      String port = System.getProperty("RDS_PORT");
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+		      System.out.println("Getting remote connection with connection string from environment variables.");
+		      con = DriverManager.getConnection(jdbcUrl);
+		      System.out.println("Remote connection successful.");
+		      return con;
+		    }
+		    catch (ClassNotFoundException e) { e.printStackTrace();}
+		    catch (SQLException e) { e.printStackTrace();}
+	    }
+	    return con;
 	}
 	
 	private void closeConnection(Connection connection) {

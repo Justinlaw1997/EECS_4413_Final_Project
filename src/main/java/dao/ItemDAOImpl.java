@@ -18,18 +18,36 @@ import org.apache.tomcat.jdbc.pool.DataSource;
 import model.Brand;
 import model.Category;
 import model.Item;
+import java.util.logging.*;
 
 public class ItemDAOImpl implements ItemDAO {
 	
-	static {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException ex) {}
-	}
-
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:teamJIL.db");
-
+		Connection con = null;
+	      Logger logger= Logger.getLogger(ItemDAOImpl.class.getName());
+		if (System.getProperty("RDS_HOSTNAME") != null) {
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String dbName = System.getProperty("RDS_DB_NAME");
+		      String userName = System.getProperty("RDS_USERNAME");
+		      String password = System.getProperty("RDS_PASSWORD");
+		      String hostname = System.getProperty("RDS_HOSTNAME");
+		      String port = System.getProperty("RDS_PORT");
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+		      logger.info("Getting remote connection with connection string from environment variables.");
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+		    } catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }
+		    return con;
+		}else {
+			logger.warning("RDS HOSTNAME IS NULL");
+		}
+		return con;
 	}
 	
 	private void closeConnection(Connection connection) {
