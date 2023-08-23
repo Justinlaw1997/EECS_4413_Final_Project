@@ -33,7 +33,7 @@ public class ItemDAOImpl implements ItemDAO {
 		      String password = System.getProperty("RDS_PASSWORD");
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
-		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
 		      logger.info("Remote connection successful.");

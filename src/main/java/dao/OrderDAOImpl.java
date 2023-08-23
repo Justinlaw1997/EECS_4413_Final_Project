@@ -30,7 +30,7 @@ public class OrderDAOImpl implements OrderDAO {
 		      String password = System.getProperty("RDS_PASSWORD");
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
-		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      System.out.println("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
 		      System.out.println("Remote connection successful.");

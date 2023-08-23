@@ -13,7 +13,7 @@ public interface UserDAO {
 	public List<User> findAllAdmins();
 	
 	public User findUserById(int id);
-	
+		
 	public String signIn(String email, String password);
 	
 	public void registerUser(User user);

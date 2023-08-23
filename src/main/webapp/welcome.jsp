@@ -7,20 +7,24 @@
 <title>Welcome</title>
 </head>
 <body>
-	<form method='get' action='/Login'>
+	<form method='get' action='/LoginServlet'>
+		<%if(request.getAttribute("error")!=null){ %>
+				<script> alert("hi") </script>
+		<%} %>
+		
 		<h3>User Name</h3>
-		<input type='text' name='username' value='Enter UserName'/>
+		<input type='text' name='eamil'>Enter Email</input>
 		<h3>Pass Word</h3>
-		<input type='text' name='password' value='Enter Password'/>
+		<input type='text' name='password'>Enter Password</input>
 		
 		<div id='login-signup'>
 		<input type='submit' name='user-action' value='login'>Login</input>
 		<input type='submit' name='user-action' value='signup'>SignUp</input>
 		
 		</div>
-	
 		<input type='submit' name='user-action' value='guest'>Continue as guest</input>
-		
+		<input type='checkbox' name='admin' value='admin'>Admin View</input>
+	
 	</form>
 </body>
 </html>

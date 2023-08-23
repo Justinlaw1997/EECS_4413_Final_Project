@@ -30,7 +30,7 @@ public class UserDAOImpl implements UserDAO {
 		      String password = System.getProperty("RDS_PASSWORD");
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
-		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + dbName + "?user=" + userName + "&password=" + password;
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      System.out.println("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
 		      System.out.println("Remote connection successful.");
@@ -105,9 +105,11 @@ public class UserDAOImpl implements UserDAO {
 				result = "incorrect password";
 			}
 			
-			// Check if regular user or admin			
+			// Check if regular user or admin		
+			//changed to also include user id for easy user lookup in Login Servlet
 			else {
 				result = (resultSet.getInt("isAdmin") == 0) ? "customer" : "admin";
+				result += " " + resultSet.getInt("id");
 			}
 
 		} catch (SQLException e) {
