@@ -11,7 +11,7 @@
 	
 		<!-- Output sort by buttons -->
 		<p>Sort by: </p>
-		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
+		<form method='get' action='/CatalogServlet'>
        		<input type="submit" name="sort" value="All" />
 			<input type="submit" name="sort" value="Prices: Ascending" />
 			<input type="submit" name="sort" value="Prices: Descending" />
@@ -19,7 +19,7 @@
 		</form>
 
 		<!-- Output categories drowndown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
+		<form method='get' action='/CatalogServlet'>
 			<label for="categories">Sort by Category: </label>
 	     			<select name="categories" id="categories">
    				        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -31,7 +31,7 @@
 		</form>
 		
 		<!-- Output brands drowndown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
+		<form method='get' action='/CatalogServlet'>
 			<label for="brands">Sort by Brand: </label>
 	     			<select name="brands" id="brands">
    				        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
