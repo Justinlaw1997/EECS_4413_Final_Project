@@ -65,7 +65,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public Item findItemById(String id) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id " + 
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id " + 
 				"WHERE Item.itemID = '" + id + "';";
 		queryItems(query, result);;
 		return result.isEmpty()? null : result.get(0);
@@ -74,7 +74,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findAllItems() {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id;";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id";
 		queryItems(query, result);;
 		return result;
 	}
@@ -106,7 +106,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findItemsByCategory(String category) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Category.name='" + category + "';";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Category.name='" + category + "';";
 		queryItems(query, result);
 		return result;
 	}
@@ -114,7 +114,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findItemsByBrand(String brand) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Brand.name='" + brand + "';";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Brand.name='" + brand + "';";
 		queryItems(query, result);
 		return result;
 	}
