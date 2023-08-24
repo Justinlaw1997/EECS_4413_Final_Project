@@ -1,0 +1,16 @@
+@charset "ISO-8859-1";
+
+img {
+	height: 100px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.orderSelect {
+	width: 330px
+}
+
+#orderSelect {
+	width: 322px;
+}

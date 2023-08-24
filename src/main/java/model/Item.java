@@ -1,6 +1,10 @@
 package model;
 
-public class Item {
+import java.io.Serializable;
+
+public class Item implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String itemID;
 	private String name;
@@ -9,8 +13,9 @@ public class Item {
 	private Brand brand;
 	private int price;
 	private int quantity;
+	private String image;
 	
-	public Item(String itemID, String name, String description, Category category, Brand brand, int price, int quantity) {
+	public Item(String itemID, String name, String description, Category category, Brand brand, int price, int quantity, String image) {
 		super();
 		this.itemID = itemID;
 		this.name = name;
@@ -19,6 +24,7 @@ public class Item {
 		this.brand = brand;
 		this.price = price;
 		this.quantity = quantity;
+		this.image = image;
 	}
 	
 	public String getItemID() {
@@ -77,9 +83,17 @@ public class Item {
 		this.quantity = quantity;
 	}
 	
+	public String getImage() {
+		return image;
+	}
+	
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
 	@Override
 	public String toString() {
 		return "Item [itemID=" + itemID + ", name=" + name + ", description=" + description + ", category=" + category
-				+ ", brand=" + brand + ", price=" + price + ", quantity=" + quantity + "]";
+				+ ", brand=" + brand + ", price=" + price + ", quantity=" + quantity + ", image=" + image + "]";
 	}
 }

@@ -52,7 +52,7 @@ public class CartServlet extends HttpServlet {
 	 
 	      
 	      try {
-	         out.println("<html><head><title>Shopping Cart</title></head><body>");
+	         out.println("<html><head><title>Shopping Cart</title><link href=\"css/style.css\" rel=\"stylesheet\"></head><body>");
 	         out.println("<h2>Your Shopping Cart</h2>");
 	         
 	 
@@ -80,8 +80,9 @@ public class CartServlet extends HttpServlet {
 		    	 Brand brand = it.getBrand();
 		    	 int price = it.getPrice();
 		    	 int quantity = it.getQuantity();
+		    	 String image = it.getImage();
 			  
-		        cart.add(itemID, name, description, category, brand, price, quantity);
+		        cart.add(itemID, name, description, category, brand, price, quantity, image);
 		               
 		      }
 	      
@@ -114,6 +115,7 @@ public class CartServlet extends HttpServlet {
 	         } else {
 	            out.println("<table border='1' cellpadding='6'>");
 	            out.println("<tr>");
+	            out.println("<th>Image ID</th>");
 	            out.println("<th>Item ID</th>");
 	            out.println("<th>Name</th>");
 	            out.println("<th>Description</th>");
@@ -133,9 +135,11 @@ public class CartServlet extends HttpServlet {
 		    	   Brand brand = it.getBrand();
 		    	   int price = it.getPrice();
 		    	   int quantity = it.getQuantity();
+		    	   String image = it.getImage();
 	 
 	               out.println("<tr>");
-	           	  out.println("<td>" + id + "</td>");
+	               out.println("<td>" + id + "</td>");
+	           	  out.println("<td><image src=" + image + "></td>");
 	          	  out.println("<td>" + name + "</td>");
 	          	  out.println("<td>" + description + "</td>");
 	          	  out.println("<td>" + category.getName() + "</td>");

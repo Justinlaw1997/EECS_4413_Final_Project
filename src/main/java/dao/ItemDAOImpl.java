@@ -170,8 +170,9 @@ public class ItemDAOImpl implements ItemDAO {
 				String description = resultSet.getString("description");
 				int price = resultSet.getInt("price");
 				int quantity = resultSet.getInt("quantity");
+				String image = "images/" + itemId + ".jpg";
 
-				Item item = new Item(itemId, itemName, description, category, brand, price, quantity);				
+				Item item = new Item(itemId, itemName, description, category, brand, price, quantity, image);				
 				result.add(item);
 			}
 			

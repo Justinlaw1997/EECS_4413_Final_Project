@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Admin Page</title>
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Item Catalog</title>
+<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 	<h2> Item Catalog</h2>
@@ -48,6 +49,7 @@
 	        <table border='1' cellpadding='6'>
 		        <tr>
 		        	<th></th>
+		        	<th>Image</th>
 			        <th>Item name</th>
 			        <th>Description</th>
 			        <th>Category</th>
@@ -61,6 +63,7 @@
 		        <c:forEach items="${requestScope.allItemsList}" var="item">
 				 <tr>
 				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
+					 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
 					 <td> ${item.getName()} </td>
 			         <td> ${item.getDescription()} </td>
 			         <td> ${item.getCategory().getName()} </td>
