@@ -80,7 +80,7 @@ public class CatalogServlet extends HttpServlet {
 		request.setAttribute("brands", brands);
 
     	
-    	RequestDispatcher rd = request.getRequestDispatcher("CatalogView.jsp");
+    	RequestDispatcher rd = request.getRequestDispatcher("jsp/CatalogView.jsp");
 		rd.forward(request, response);
 	}
 
