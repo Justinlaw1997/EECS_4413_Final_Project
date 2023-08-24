@@ -43,7 +43,7 @@
 		</form>
 
 
-        <form method='get' action='/checkout'>
+        <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
         
 	        <table border='1' cellpadding='6'>
 		        <tr>
@@ -53,23 +53,26 @@
 			        <th>Category</th>
 			        <th>Brand</th>
 			        <th>Price</th>
+			        <th>Quantity</th>
 		        </tr>
 	
 	
 		        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		        <c:forEach items="${requestScope.allItemsList}" var="item">
 				 <tr>
-				 	 <td><input type='checkbox' name='item' value='${item.getItemID()}'  /> </td>
+				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
 					 <td> ${item.getName()} </td>
 			         <td> ${item.getDescription()} </td>
 			         <td> ${item.getCategory().getName()} </td>
 			         <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>
+			         <td><input type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
 				 </tr>
 				 </c:forEach>
 		
 		        <tr>
 		       		<td><input type="submit" value="Order" /></td>
+    		    	<td><input type='hidden' name='todo' value='add' /></td>
 		        </tr>
 	
 	        </table><br /> 
