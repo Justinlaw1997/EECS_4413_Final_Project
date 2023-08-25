@@ -51,11 +51,11 @@
 		        	<th></th>
 		        	<th>Image</th>
 			        <th>Item name</th>
-			        <th>Description</th>
 			        <th>Category</th>
 			        <th>Brand</th>
 			        <th>Price</th>
 			        <th>Quantity</th>
+			        <th></th>
 		        </tr>
 	
 	
@@ -65,11 +65,11 @@
 				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
 					 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
 					 <td> ${item.getName()} </td>
-			         <td> ${item.getDescription()} </td>
-			         <td> ${item.getCategory().getName()} </td>
-			         <td> ${item.getBrand().getName()} </td>
+					 <td> ${item.getCategory().getName()}</td>
+					 <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>
 			         <td><input type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
+			         <td><a href='/EECS4413FinalProjectJLI/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
 				 </tr>
 				 </c:forEach>
 		
