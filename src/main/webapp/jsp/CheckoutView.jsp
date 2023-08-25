@@ -14,7 +14,7 @@
 	<p> To submit your order, press the "Confirm Order" button.</p>
 	<br>
 	
-	<!-- Outputs the users shipping information -->
+	<%-- Outputs the users shipping information --%>
 	<c:set var="user" value="${ sessionScope.user }"/>
 	<p><b>Street Address:</b> ${ user.getAddress().getStreetAddress() }</p>
 	<p><b>Province:</b> ${ user.getAddress().getProvince() }</p>
@@ -22,7 +22,7 @@
 	<p><b>Postal Code:</b> ${ user.getAddress().getPostalCode() }</p>
 	<br>
 	
-	<!-- Form to grab credit card information -->
+	<%-- Form to grab credit card information --%>
 	<form method='get' action='/EECS4413FinalProjectJLI/ConfirmationServlet'>
 		<label for="creditNumber">Credit Card Number</label>
 		<input type='text' name='creditNumber' value='' /><br>

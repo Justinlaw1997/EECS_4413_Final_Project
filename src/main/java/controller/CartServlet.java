@@ -53,12 +53,23 @@ public class CartServlet extends HttpServlet {
 	    	String todo = request.getParameter("todo");
 	         
 	    	if (todo.equals("add") ) {
-	    		String[] ids = request.getParameterValues("id");
+	    		
+	    		// Items coming from the Catalog Page
+			    String[] ids = request.getParameterValues("id");
+			    
+			    // Item coming from a single Item Page
+			    String singleId = request.getParameter("singleId");
           
-	    		if (ids == null) {
-	    			rd = request.getRequestDispatcher("jsp/CartNoItemsView.jsp");
-	    			rd.forward(request, response);
-	    		}
+			    if (ids == null) {
+			    	if (singleId == null) {
+		    			rd = request.getRequestDispatcher("jsp/CartNoItemsView.jsp");
+		    			rd.forward(request, response);
+			    	}
+			    	
+			    	// Set the single item to an array and continue
+			    	ids = new String[1];
+			    	ids[0] = singleId;
+			     }
 	    		
 	    		for (String id : ids) {
 	

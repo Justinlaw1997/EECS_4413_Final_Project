@@ -11,18 +11,17 @@
 <body>
 	<h2>Your Shopping Cart</h2>
 	<c:choose>
-		<!-- Returns the following text if the cart is empty -->
+		<%-- Returns the following text if the cart is empty --%>
 		<c:when test="${ sessionScope.cart.isEmpty() }">
 			<p>Your shopping cart is empty</p>
 		</c:when>
 		<c:otherwise>
-			<!-- Returns a table containing of the user's chosen items -->
+			<%-- Returns a table containing of the user chosen items --%>
 			<table border='1' cellpadding='6'>
 	            <tr>
 		            <th>Image ID</th>
 		            <th>Item ID</th>
 		            <th>Name</th>
-		            <th>Description</th>
 		            <th>Category</th>
 		            <th>Brand</th>
 		            <th>Price</th>
@@ -38,13 +37,12 @@
 				           		<image src='${ item.getImage() }'>
 				           	</td>
 				          	<td> ${ item.getName() }</td>
-				          	<td> ${ item.getDescription() }</td>
 				          	<td> ${ item.getCategory().getName()}</td>
 				          	<td> ${ item.getBrand().getName()}</td>
 				          	<td> $ ${ item.getPrice() }</td>
 	          	  
 	          	  			<td>
-	          	  				<!-- Updates the quantity of the chosen item -->
+	          	  				<%-- Updates the quantity of the chosen item --%>
 		          	  			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='update' /> 
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }' /> 
@@ -54,7 +52,7 @@
 			                </td>
 		 
 			                <td>
-			                	<!-- Removes the chosen item -->
+			                	<%-- Removes the chosen item --%>
 				                <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='remove' >
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }'> 
@@ -71,12 +69,12 @@
 		</c:otherwise>
 	</c:choose>
 	
-	<!-- Button to return to the catalog page -->
+	<%-- Button to return to the catalog page --%>
 	<p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
 	
-	<!-- Outputs a button to checkout all the chosen items -->
+	<%-- Outputs a button to checkout all the chosen items --%>
 	<c:if test="${ !sessionScope.cart.isEmpty() }">
-		<form method='get' action='OrderServlet'>
+		<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
 			<input type='submit' value='CHECK OUT'>
 		</form>
 	</c:if>
