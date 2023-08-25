@@ -10,7 +10,7 @@
 <body>
 	<h2> Item Catalog</h2>
 	
-		<!-- Output sort by buttons -->
+		<%-- Output sort by buttons --%>
 		<p>Sort by: </p>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
        		<input type="submit" name="sort" value="All" />
@@ -19,7 +19,7 @@
 			<input type="submit" name="sort" value="Names: Alphabetically" />
 		</form>
 
-		<!-- Output categories drowndown -->
+		<%-- Output categories drowndown --%>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="categories">Sort by Category: </label>
 	     			<select name="categories" id="categories">
@@ -31,7 +31,7 @@
    					<input type="submit" name="sort" value="Submit: Category" />
 		</form>
 		
-		<!-- Output brands drowndown -->
+		<%-- Output brands drowndown --%>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="brands">Sort by Brand: </label>
 	     			<select name="brands" id="brands">

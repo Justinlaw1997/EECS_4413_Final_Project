@@ -9,7 +9,7 @@
 <body>
 	<h2>Your order was successful!</h2>
 	
-	<!-- Button to return to the catalog page -->
+	<%-- Button to return to the catalog page --%>
 	<p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
 </body>
 </html>
