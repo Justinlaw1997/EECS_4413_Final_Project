@@ -59,15 +59,22 @@ public class CartServlet extends HttpServlet {
 	         String todo = request.getParameter("todo");
 	        	         
 	         if (todo.equals("add") ) {
-		            
+
+	 		// Items coming from the Catalog Page
 		    String[] ids = request.getParameterValues("id");
+		    // Item coming from a single Item Page
+		    String singleId = request.getParameter("singleId");
 		              
 		    if (ids == null) {
-		       out.println("<h3>Please Select a Book!</h3></body></html>");
-		       return;
+		    	if (singleId == null) {
+		    		out.println("<h3>Please Select a Book!</h3></body></html>");
+				    return;
+		    	}
+		    	// set the single item to an array and continue
+		    	ids = new String[1];
+		    	ids[0] = singleId;
 		     }
 		     for (String id : ids) {
-		    	
 		    	 ItemDAO dao = new ItemDAOImpl();
 		    	 Item it  = dao.findItemById(id);
 		    	 it.setQuantity(Integer.parseInt(request.getParameter("qty" + id)));
@@ -115,10 +122,8 @@ public class CartServlet extends HttpServlet {
 	         } else {
 	            out.println("<table border='1' cellpadding='6'>");
 	            out.println("<tr>");
-	            out.println("<th>Image ID</th>");
-	            out.println("<th>Item ID</th>");
+	            out.println("<th>Image</th>");
 	            out.println("<th>Name</th>");
-	            out.println("<th>Description</th>");
 	            out.println("<th>Category</th>");
 	            out.println("<th>Brand</th>");
 	            out.println("<th>Price</th>");
@@ -130,7 +135,6 @@ public class CartServlet extends HttpServlet {
 	            for (Item it : cart.getItems()) {
 	               String id = it.getItemID();
 	               String name = it.getName();
-		    	   String description = it.getDescription();
 		    	   Category category = it.getCategory();
 		    	   Brand brand = it.getBrand();
 		    	   int price = it.getPrice();
@@ -138,10 +142,8 @@ public class CartServlet extends HttpServlet {
 		    	   String image = it.getImage();
 	 
 	               out.println("<tr>");
-	               out.println("<td>" + id + "</td>");
 	           	  out.println("<td><image src=" + image + "></td>");
 	          	  out.println("<td>" + name + "</td>");
-	          	  out.println("<td>" + description + "</td>");
 	          	  out.println("<td>" + category.getName() + "</td>");
 	          	  out.println("<td>" + brand.getName() + "</td>");
 	          	  out.println("<td>" + price + "</td>");
