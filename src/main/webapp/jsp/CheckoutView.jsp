@@ -23,7 +23,7 @@
 	<br>
 	
 	<!-- Form to grab credit card information -->
-	<form method='get' action='/EECS4413FinalProjectJLI/OrderConfirmedServlet'>
+	<form method='get' action='/EECS4413FinalProjectJLI/ConfirmationServlet'>
 		<label for="creditNumber">Credit Card Number</label>
 		<input type='text' name='creditNumber' value='' /><br>
 		
