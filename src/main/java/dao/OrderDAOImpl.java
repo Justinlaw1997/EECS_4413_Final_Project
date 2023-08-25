@@ -24,7 +24,7 @@ public class OrderDAOImpl implements OrderDAO {
 		Connection con = null;
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 		      try {
-		      Class.forName("org.postgresql.Driver");
+		      Class.forName("com.mysql.jdbc.Driver");
 		      String dbName = System.getProperty("RDS_DB_NAME");
 		      String userName = System.getProperty("RDS_USERNAME");
 		      String password = System.getProperty("RDS_PASSWORD");

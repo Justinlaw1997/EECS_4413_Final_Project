@@ -23,7 +23,7 @@
 		
 		</div>
 		<input type='submit' name='user-action' value='guest'>Continue as guest</input>
-		<input type='checkbox' name='admin' value='admin'>Admin View</input>
+		<input type='checkbox' name='adminPage' value='go'>Admin View</input>
 	
 	</form>
 </body>
