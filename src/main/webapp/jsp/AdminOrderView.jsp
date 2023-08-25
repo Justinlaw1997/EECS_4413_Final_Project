@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Admin Order Page</title>
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -23,7 +24,7 @@
 		
 		<!-- Filter by Customer Dropdown -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-   			<select style="width:330px" name="customer" id="customer">
+   			<select class="orderSelect" name="customer" id="customer">
 				<c:forEach items="${requestScope.users}" var="customer">
 					<option value="${customer.getId()}">${customer.getFirstName()} ${customer.getLastName()}</option>
 				</c:forEach>
@@ -34,7 +35,7 @@
 		
 		<!-- Filter by Item Dropdown -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-   			<select style="width:330px" name="item" id="item">
+   			<select class="orderSelect" name="item" id="item">
 				<c:forEach items="${requestScope.items}" var="item">
 					<option value="${item.getItemID()}">${item.getName()}</option>
 				</c:forEach>
@@ -45,7 +46,7 @@
 		
 		<!-- Filter by Brand Dropdown -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-   			<select style="width:330px" name="brand" id="brand">
+   			<select class="orderSelect" name="brand" id="brand">
 				<c:forEach items="${requestScope.brands}" var="brand">
 					<option value="${brand.getName()}">${brand.getName()}</option>
 				</c:forEach>
@@ -56,7 +57,7 @@
 		
 		<!-- Filter by Category Dropdown -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-   			<select style="width:330px" name="category" id="category">
+   			<select class="orderSelect" name="category" id="category">
 				<c:forEach items="${requestScope.categories}" var="category">
 					<option value="${category.getName()}">${category.getName()}</option>
 				</c:forEach>
@@ -67,7 +68,7 @@
 				
 		<!-- Filter by Date Input -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-   			<input style="width:322px" name="date" id="date">
+   			<input id="orderSelect" name="date" id="date">
 			<input type="submit" name="filterOrders" value="Filter by Date" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>

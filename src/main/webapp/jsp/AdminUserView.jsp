@@ -7,6 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Admin User Page</title>
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>

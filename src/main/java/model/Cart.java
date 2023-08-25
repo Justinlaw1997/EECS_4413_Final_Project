@@ -15,7 +15,7 @@ public class Cart {
  
    // Add a Item into this Cart, with qtyOrdered. If the item of id already exists, update the qty ordered
    // if not, create a new item.
-   public void add(String itemID, String name, String description, Category category, Brand brand, int price, int quantity) {
+   public void add(String itemID, String name, String description, Category category, Brand brand, int price, int quantity, String image) {
  	  Boolean itemFound = false;
       for(Item item: cart) {
     	  if (item.getItemID().equals(itemID)) {
@@ -26,7 +26,7 @@ public class Cart {
       }
 	  
 	  if (itemFound == false) {
-		  Item newItem = new Item(itemID, name, description, category, brand, price, quantity);
+		  Item newItem = new Item(itemID, name, description, category, brand, price, quantity, image);
 		  newItem.setQuantity(quantity);
 		  cart.add(newItem);
 	  }

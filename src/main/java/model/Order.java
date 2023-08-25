@@ -1,8 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	private int id;
 	private User customer;
