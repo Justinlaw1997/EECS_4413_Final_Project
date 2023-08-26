@@ -46,7 +46,7 @@
 		          	  			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='update' /> 
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }' /> 
-					                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantity() }' />
+					                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityPurchased() }' />
 					                <input type='submit' value='Update' />
 				                </form>
 			                </td>
@@ -60,7 +60,7 @@
 				                </form>
 			                </td>
 			            </tr>
-		                <c:set var="totalPrice" value="${ totalPrice + item.getPrice() * item.getQuantity()}" />
+		                <c:set var="totalPrice" value="${ totalPrice + item.getPrice() * item.getQuantityPurchased()}" />
 					</c:forEach>
 				<tr>
 					<td colspan='6' align=''>Total Price: $ ${ totalPrice }</td>

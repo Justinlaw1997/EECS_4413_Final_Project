@@ -25,6 +25,7 @@
         <table border='1' cellpadding='6'>
 	        <tr>
 	        	<th>ID</th>
+	        	<th>Image</th>
 		        <th>Name</th>
 		        <th>Description</th>
 		        <th>Category</th>
@@ -34,14 +35,15 @@
 	        </tr>
 
 	        <c:forEach items="${requestScope.items}" var="item">
-			 <tr>
+			 <tr>			 	
 				 <td> ${item.getItemID()} </td>
+				 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
 				 <td> ${item.getName()} </td>
 		         <td> ${item.getDescription()} </td>
 		         <td> ${item.getCategory().getName()} </td>
 		         <td> ${item.getBrand().getName()} </td>
 		         <td> $ ${item.getPrice()} </td>
-		         <td> ${item.getQuantity()} </td>
+		         <td> ${item.getQuantityStocked()} </td>
 			 </tr>
 			 </c:forEach>
         </table><br /> 

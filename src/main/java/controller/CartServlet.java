@@ -77,7 +77,7 @@ public class CartServlet extends HttpServlet {
     			// Finds the specific item within the database
     			ItemDAO dao = new ItemDAOImpl();
     			Item it  = dao.findItemById(id);
-    			it.setQuantity(Integer.parseInt(request.getParameter("qty" + id)));
+    			it.setQuantityPurchased(Integer.parseInt(request.getParameter("qty" + id)));
     			
     			// Sets all of the item description names to a variable
 	    			String itemID = it.getItemID();
@@ -86,11 +86,12 @@ public class CartServlet extends HttpServlet {
 	    			Category category = it.getCategory();
 	    			Brand brand = it.getBrand();
 	    			int price = it.getPrice();
-	    			int quantity = it.getQuantity();
+	    			int quantityStocked = it.getQuantityStocked();
+	    			int quantityPurchased = it.getQuantityPurchased();
 	    			String image = it.getImage();
   
 	    			// Adds the specific item to the cart of the current session user
-	    			cart.add(itemID, name, description, category, brand, price, quantity, image);
+	    			cart.add(itemID, name, description, category, brand, price, quantityStocked, quantityPurchased, image);
            
 	    		}
  

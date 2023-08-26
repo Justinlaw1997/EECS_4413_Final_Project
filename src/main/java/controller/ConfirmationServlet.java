@@ -3,6 +3,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
@@ -58,13 +59,16 @@ public class ConfirmationServlet extends HttpServlet {
 			String date = new Date().toString();
 			Cart cart = (Cart) session.getAttribute("cart");
 			List<Item> items = cart.getItems();
+			HashMap<Item, Integer> lineItems = new HashMap<Item, Integer>();
 			
+			// For each item, add it and the quantity purchased, then increment the totalPrice 
 			int total = 0;
 			for (Item item: items) {
-				total += item.getPrice();
+				lineItems.put(item, item.getQuantityPurchased());
+				total += item.getPrice() * item.getQuantityPurchased();
 			}
 			
-			Order order = new Order(id, user, date, total, items);		
+			Order order = new Order(id, user, date, total, lineItems);		
 			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
 			order.setId(order.toString().hashCode());
 			
