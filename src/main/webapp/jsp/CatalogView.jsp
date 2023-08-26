@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +10,34 @@
 <body>
 	<h2> Item Catalog</h2>
 	
+		<%-- Output conditional options depending if User or Guest --%>
+		<div id="forms">
+			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
+				<input type="submit" value="Go to Cart" />
+				<input type='hidden' name='todo' value='view' />
+			</form>
+			<c:choose>
+			
+				<%-- Display 'View Orders' and 'Log Out' if User --%>
+				<c:when test="${sessionScope.user != null}">
+					<form method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
+						<input type="submit" value="View Orders" />
+					</form>
+					<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
+						<input type="submit" value="Log Out" />
+					</form>
+				</c:when>
+				
+				<%-- Display 'Log In' if Guest --%>
+				<c:otherwise>
+					<form method='get' action='/EECS4413FinalProjectJLI/jsp/welcome.jsp'>
+						<input type="submit" value='Log In' />
+					</form>
+				</c:otherwise>
+				
+			</c:choose>
+		</div>
+		
 		<%-- Output sort by buttons --%>
 		<p>Sort by: </p>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
@@ -58,8 +86,6 @@
 			        <th></th>
 		        </tr>
 	
-	
-		        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		        <c:forEach items="${requestScope.allItemsList}" var="item">
 				 <tr>
 				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>

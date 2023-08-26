@@ -13,12 +13,14 @@
 	<body>
 		<h2>Manage Orders</h2>
 	 
-        <!-- Switch Views or Log Out -->
+	    <!-- Switch Views or Log Out -->
+	    <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+       		<input type="submit" name="selection" value="Log Out" />
+		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
        		<input type="submit" name="selection" value="Manage Items" />
        		<input type="submit" name="selection" value="Manage Users" />
-       		<input type="submit" name="selection" value="Log Out" />
-		</form>
+       	</form><br>
 		
 		<br> Filter Orders:<br>
 		
@@ -87,6 +89,7 @@
 		        <th>Items</th>
 		        <th>Total</th>
 		        <th>Date</th>
+		        <th>Delete Order</th>
 	        </tr>
 	      
 	        <c:forEach items="${requestScope.orders}" var="order">
@@ -96,11 +99,17 @@
 			         
 					 <!-- Fetch individual items from each order -->
 			         <td><c:forEach items="${order.getItems()}" var="item">
-				      	${item.getName()}<br>
+				      	${item.getKey().getName()} x ${item.getValue()}<br>
 				 	 </c:forEach></td>
 				 	 
 			         <td> $${order.getTotal()} </td>
 			         <td> ${order.getDateOfPurchase()} </td>
+			         
+			         <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+					 	<input type="submit" value="Delete" />
+					 	<input type="hidden" name="selection" value="Manage Orders" />
+					 	<input type="hidden" name="delete" value="${order.getId()}" />
+					 </form></td> 
 				 </tr>
 			 </c:forEach>	
         </table>

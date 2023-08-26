@@ -15,19 +15,19 @@ public class Cart {
  
    // Add a Item into this Cart, with qtyOrdered. If the item of id already exists, update the qty ordered
    // if not, create a new item.
-   public void add(String itemID, String name, String description, Category category, Brand brand, int price, int quantity, String image) {
+   public void add(String itemID, String name, String description, Category category, Brand brand, int price, int quantityStocked, int quantityPurchased, String image) {
  	  Boolean itemFound = false;
       for(Item item: cart) {
     	  if (item.getItemID().equals(itemID)) {
-    		  item.setQuantity(item.getQuantity() + quantity);
+    		  item.setQuantityPurchased(item.getQuantityPurchased() + quantityPurchased);
     		  itemFound = true;
     		  break;
     	  }
       }
 	  
 	  if (itemFound == false) {
-		  Item newItem = new Item(itemID, name, description, category, brand, price, quantity, image);
-		  newItem.setQuantity(quantity);
+		  Item newItem = new Item(itemID, name, description, category, brand, price, quantityStocked, quantityPurchased, image);
+		  newItem.setQuantityPurchased(quantityPurchased);
 		  cart.add(newItem);
 	  }
    }
@@ -36,7 +36,7 @@ public class Cart {
    public void update(String id, int newQty) {
 	   for (Item item: cart) {
 		   if (item.getItemID().equals(id)) {
-			   item.setQuantity(newQty);
+			   item.setQuantityPurchased(newQty);
 		   }
 	   }
    }

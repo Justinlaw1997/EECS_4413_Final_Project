@@ -19,5 +19,7 @@ public interface UserDAO {
 	public void registerUser(User user);
 	
 	public void removeUser(User user);
+	
+	public void changeUserStatus(int id);
 
 }

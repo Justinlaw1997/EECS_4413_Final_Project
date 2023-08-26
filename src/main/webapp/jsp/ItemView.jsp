@@ -19,7 +19,7 @@
          <p><b>Price:</b> $${item.getPrice()}</p> 
          <p><b>Category:</b> ${item.getCategory().getName()}</p> 
          <p><b>Brand:</b> ${item.getBrand().getName()}</p> 
-         <p><b>Quantity In Stock:</b> ${item.getQuantity()}</p> 
+         <p><b>Quantity In Stock:</b> ${item.getQuantityStocked()}</p> 
 		
 		<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
   			<input type='text' size='4' value='1' name='qty${item.getItemID()}'>

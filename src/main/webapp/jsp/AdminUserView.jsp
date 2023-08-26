@@ -14,11 +14,13 @@
 		<h2>Manage Users</h2>
 	 
         <!-- Switch Views or Log Out -->
+        <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+       		<input type="submit" name="selection" value="Log Out" />
+		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
        		<input type="submit" name="selection" value="Manage Items" />
        		<input type="submit" name="selection" value="Manage Orders" />
-       		<input type="submit" name="selection" value="Log Out" />
-		</form>
+       	</form><br>
 		
 		<!-- Filtering options -->
 		<br> Filter Users:<br>
@@ -39,6 +41,8 @@
 		        <th>Address</th>
 		        <th>Phone</th>
 		        <th>Status</th>
+		        <th>Change Status</th>
+		        <th>Delete User</th>
 	        </tr>
 	      
 	        <c:forEach items="${requestScope.users}" var="user">
@@ -66,6 +70,19 @@
 					 		<td>Customer</td>
 					 	</c:otherwise>
 					 </c:choose>
+					 
+					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+					 	<input type="submit" value="Change" />
+					 	<input type="hidden" name="selection" value="Manage Users" />
+					 	<input type="hidden" name="status" value="${user.getId()}" />
+					 </form></td>
+					 
+					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+					 	<input type="submit" value="Delete" />
+					 	<input type="hidden" name="selection" value="Manage Users" />
+					 	<input type="hidden" name="delete" value="${user.getId()}" />
+					 </form></td>
+					 
 				 </tr>
 			 </c:forEach>	
         </table>
