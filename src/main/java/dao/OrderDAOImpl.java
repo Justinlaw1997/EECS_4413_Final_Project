@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
+
 import model.Item;
 import model.Order;
 import model.User;
@@ -22,24 +24,45 @@ public class OrderDAOImpl implements OrderDAO {
 
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
+	      Logger logger= Logger.getLogger(OrderDAOImpl.class.getName());
 		if (System.getProperty("RDS_HOSTNAME") != null) {
-		      try {
+			try {
 		      Class.forName("com.mysql.jdbc.Driver");
-		      String dbName = System.getProperty("RDS_DB_NAME");
 		      String userName = System.getProperty("RDS_USERNAME");
 		      String password = System.getProperty("RDS_PASSWORD");
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
-		      System.out.println("Getting remote connection with connection string from environment variables.");
+		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
-		      System.out.println("Remote connection successful.");
+		      logger.info("Remote connection successful.");
 		      return con;
+		    } catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
 		    }
-		    catch (ClassNotFoundException e) { e.printStackTrace();}
-		    catch (SQLException e) { e.printStackTrace();}
-	    }
-	    return con;
+		    return con;
+		}else {
+			//This is only used for development, when project is not deployed
+			//hard coded connection
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = "root";
+		      String password = "root1234";
+		      String hostname = "awseb-e-bybgza4twa-stack-awsebrdsdatabase-57j2ooqi4tt8.cxocrl7z2rgw.us-east-2.rds.amazonaws.com";
+		      String port = "3306";
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+			}catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }		      
+		}
+		return con;
 	}
 	
 	private void closeConnection(Connection connection) {

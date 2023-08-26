@@ -28,7 +28,6 @@ public class ItemDAOImpl implements ItemDAO {
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
-		      String dbName = System.getProperty("RDS_DB_NAME");
 		      String userName = System.getProperty("RDS_USERNAME");
 		      String password = System.getProperty("RDS_PASSWORD");
 		      String hostname = System.getProperty("RDS_HOSTNAME");
@@ -45,7 +44,23 @@ public class ItemDAOImpl implements ItemDAO {
 		    }
 		    return con;
 		}else {
-			logger.warning("RDS HOSTNAME IS NULL");
+			//This is only used for development, when project is not deployed
+			//hard coded connection
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = "root";
+		      String password = "root1234";
+		      String hostname = "awseb-e-bybgza4twa-stack-awsebrdsdatabase-57j2ooqi4tt8.cxocrl7z2rgw.us-east-2.rds.amazonaws.com";
+		      String port = "3306";
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+			}catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }		      
 		}
 		return con;
 	}

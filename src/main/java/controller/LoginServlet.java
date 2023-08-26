@@ -51,6 +51,10 @@ public class LoginServlet extends HttpServlet {
 			
 			//split into sign in result and customer id
 			String [] result = dao.signIn(email, pass).split(" ", 2);
+			System.out.println("Got result from LOGIN with email = " + email + ": ");
+			for(String s: result) {
+				System.out.println(s);
+			}
 			if(result[0].equals("user does not exist")) {
 				//set a user does not exist error alert to pop up on login page	
 				request.setAttribute(" n", "error");
@@ -79,7 +83,6 @@ public class LoginServlet extends HttpServlet {
 		        
 			}else if(result[0].equals("customer") || result[0].equals("admin")) {
 				//user catalog regular use case
-				
 				User user = dao.findUserById(Integer.parseInt(result[1]));
 				
 				//store the user in the session (USER IS LOGGED IN)
@@ -119,8 +122,12 @@ public class LoginServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
 			Address address = new Address(1, streetAddress, province, country, postalCode, phone);
+			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
+			address.setId(address.toString().hashCode());
 			//isadmin is 0 for all regular users, isadmin = 1 must be injected into server to make an admin
 			User user = new User(1, firstName, lastName, address, 0, email, password);
+			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
+			user.setId(user.toString().hashCode());
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER

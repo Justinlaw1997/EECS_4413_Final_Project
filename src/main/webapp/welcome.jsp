@@ -7,13 +7,13 @@
 <title>Welcome</title>
 </head>
 <body>
-	<form method='get' action='/LoginServlet'>
+	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
 		<%if(request.getAttribute("error")!=null){ %>
 				<script> alert("hi") </script>
 		<%} %>
 		
 		<h3>User Name</h3>
-		<input type='text' name='eamil'>Enter Email</input>
+		<input type='text' name='email'>Enter Email</input>
 		<h3>Pass Word</h3>
 		<input type='text' name='password'>Enter Password</input>
 		
