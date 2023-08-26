@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -50,20 +53,23 @@ public class LoginServlet extends HttpServlet {
 			UserDAO dao = new UserDAOImpl();
 			
 			//split into sign in result and customer id
+			String resultString = dao.signIn(email, pass);
 			String [] result = dao.signIn(email, pass).split(" ", 2);
+
+			
 			System.out.println("Got result from LOGIN with email = " + email + ": ");
 			for(String s: result) {
 				System.out.println(s);
 			}
-			if(result[0].equals("user does not exist")) {
+			if(resultString.equals("user does not exist")) {
 				//set a user does not exist error alert to pop up on login page	
-				request.setAttribute(" n", "error");
+				request.setAttribute("no-user", "error");
 				
 				//send back to login
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/welcome.jsp");
 				rd.forward(request, response);
 				
-			}else if(result[0].equals("incorrect password")) {
+			}else if(resultString.equals("incorrect password")) {
 				//set an incorrect password alert to show up on login page	
 				request.setAttribute("incrpass", "incrpass");
 				
@@ -123,6 +129,69 @@ public class LoginServlet extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
+			
+			//INPUT VALIDATION
+			String firstNameReg = "[A-Za-z]+";
+			String lastNameReg = "([A-Za-z]+\\w[A-Za-z]+)+";
+			String emailReg = ".+@.+\\.+";
+			//Digit must occur once
+			String passReg1 = "(?=.*[0-9])";
+			//Special Character for pass
+			String passReg2 = "(?=.*[@#$%^&-+=()])";
+			//Uppercase atleastOnce
+			String passRegCaps = "(?=.*[A-Z])";
+			//No whitespace in pass
+			String passWS = "(?=\\\\S+$)";
+			
+			//Reg1
+	        Pattern p = Pattern.compile(passReg1);
+			Matcher m = p.matcher(password);
+			if(!m.matches()) {
+				//incorrect!!
+				PrintWriter out = response.getWriter();
+				out.print("Password must include a digit atleast once");
+				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+					rd.include(request, response);
+			}
+			
+			//Reg1
+	        Pattern p2 = Pattern.compile(passReg2);
+			Matcher m2 = p.matcher(password);
+			if(!m2.matches()) {
+				//incorrect!!
+				PrintWriter out = response.getWriter();
+				out.print("Password must include a special character atleast once");
+				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+					rd.include(request, response);
+			}
+			
+			//RegCaps
+	        Pattern p3 = Pattern.compile(passRegCaps);
+			Matcher m3 = p.matcher(password);
+			if(!m3.matches()) {
+				//incorrect!!
+				PrintWriter out = response.getWriter();
+				out.print("Password must include a capital character atleast once");
+				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+					rd.include(request, response);
+			}
+			
+			//RegWS
+	        Pattern p4 = Pattern.compile(passWS);
+			Matcher m4 = p.matcher(password);
+			if(!m4.matches()) {
+				//incorrect!!
+				PrintWriter out = response.getWriter();
+				out.print("Password must not include any whitespace");
+				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+					rd.include(request, response);
+			}
+			
+			
+			
+			
+			
+			
 			Address address = new Address(1, streetAddress, province, country, postalCode, phone);
 			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
 			address.setId(address.toString().hashCode());

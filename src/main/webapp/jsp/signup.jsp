@@ -29,7 +29,7 @@
 		<h3>Email</h3>
 		<input type='text' name='email'>Enter Email</input>
 		<h3>Password</h3>
-		<input type='text' name='password'>Enter Password</input>
+		<input type='password' name='password'>Enter Password</input>
 		
 		<input type='submit' name='user-action' value='signupReg'>SignUp</input>	
 	</form>
