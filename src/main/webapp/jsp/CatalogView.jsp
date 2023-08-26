@@ -3,14 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta charset="UTF-8">
 <title>Item Catalog</title>
+<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 	<h2> Item Catalog</h2>
 	
-		<!-- Output sort by buttons -->
+		<%-- Output sort by buttons --%>
 		<p>Sort by: </p>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
        		<input type="submit" name="sort" value="All" />
@@ -19,7 +19,7 @@
 			<input type="submit" name="sort" value="Names: Alphabetically" />
 		</form>
 
-		<!-- Output categories drowndown -->
+		<%-- Output categories drowndown --%>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="categories">Sort by Category: </label>
 	     			<select name="categories" id="categories">
@@ -31,7 +31,7 @@
    					<input type="submit" name="sort" value="Submit: Category" />
 		</form>
 		
-		<!-- Output brands drowndown -->
+		<%-- Output brands drowndown --%>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="brands">Sort by Brand: </label>
 	     			<select name="brands" id="brands">
@@ -44,33 +44,38 @@
 		</form>
 
 
-        <form method='get' action='/checkout'>
+        <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
         
 	        <table border='1' cellpadding='6'>
 		        <tr>
 		        	<th></th>
+		        	<th>Image</th>
 			        <th>Item name</th>
-			        <th>Description</th>
 			        <th>Category</th>
 			        <th>Brand</th>
 			        <th>Price</th>
+			        <th>Quantity</th>
+			        <th></th>
 		        </tr>
 	
 	
 		        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		        <c:forEach items="${requestScope.allItemsList}" var="item">
 				 <tr>
-				 	 <td><input type='checkbox' name='item' value='${item.getItemID()}'  /> </td>
+				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
+					 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
 					 <td> ${item.getName()} </td>
-			         <td> ${item.getDescription()} </td>
-			         <td> ${item.getCategory().getName()} </td>
-			         <td> ${item.getBrand().getName()} </td>
+					 <td> ${item.getCategory().getName()}</td>
+					 <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>
+			         <td><input type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
+			         <td><a href='/EECS4413FinalProjectJLI/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
 				 </tr>
 				 </c:forEach>
 		
 		        <tr>
 		       		<td><input type="submit" value="Order" /></td>
+    		    	<td><input type='hidden' name='todo' value='add' /></td>
 		        </tr>
 	
 	        </table><br /> 

@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute(" n", "error");
 				
 				//send back to login
-				RequestDispatcher rd = request.getRequestDispatcher("/welcome.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/welcome.jsp");
 				rd.forward(request, response);
 				
 			}else if(result[0].equals("incorrect password")) {
@@ -68,7 +68,7 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("incrpass", "incrpass");
 				
 				//send back to login
-				RequestDispatcher rd = request.getRequestDispatcher("/welcome.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/jsp/welcome.jsp");
 				rd.forward(request, response);
 				
 			}else if(result[0].equals("admin") && adminPage.equals("go")) {
@@ -80,6 +80,8 @@ public class LoginServlet extends HttpServlet {
 		        session.setAttribute("user", user);
 		        
 		        //SEND ADMIN TO ADMINISTRATION PAGE HERE
+		        RequestDispatcher rd = request.getRequestDispatcher("/AdminServlet.jsp");
+				rd.forward(request, response);
 		        
 			}else if(result[0].equals("customer") || result[0].equals("admin")) {
 				//user catalog regular use case
@@ -90,14 +92,14 @@ public class LoginServlet extends HttpServlet {
 		        session.setAttribute("user", user);
 		        
 		        //send user to catalog
-		        RequestDispatcher rd = request.getRequestDispatcher("/CatalogView.jsp");
+		        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
 				rd.forward(request, response);
 			}
 			
 		
 		
 		}else if(userAction.equals("signup")) {
-			 RequestDispatcher rd = request.getRequestDispatcher("/signup.jsp");
+			 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
 				rd.forward(request, response);
 			
 		}else if(userAction.equals("guest")) {
@@ -106,7 +108,7 @@ public class LoginServlet extends HttpServlet {
 	        session.setAttribute("user", null);
 	        
 	        //Send guest to catalog
-	        RequestDispatcher rd = request.getRequestDispatcher("/CatalogView.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
 			rd.forward(request, response);
 			
 		}else if(userAction.equals("signupReg")) {
@@ -138,7 +140,7 @@ public class LoginServlet extends HttpServlet {
 	        session.setAttribute("user", user);
 	        
 	        //send user to catalog
-	        RequestDispatcher rd = request.getRequestDispatcher("/CatalogView.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
 			rd.forward(request, response);
 		}
 		

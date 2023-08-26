@@ -19,6 +19,7 @@ import model.Item;
 /**
  * Servlet implementation class CatalogServlet
  */
+@WebServlet("/CatalogServlet")
 public class CatalogServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -79,7 +80,8 @@ public class CatalogServlet extends HttpServlet {
 		request.setAttribute("brands", brands);
 
     	
-    	RequestDispatcher rd = request.getRequestDispatcher("/CatalogView.jsp");
+
+    	RequestDispatcher rd = request.getRequestDispatcher("jsp/CatalogView.jsp");
 		rd.forward(request, response);
 	}
 
