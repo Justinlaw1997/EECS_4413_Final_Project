@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import model.Address;
 import model.User;
@@ -21,7 +22,46 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leah\\Downloads\\teamJIL.db");
+		Connection con = null;
+	      Logger logger= Logger.getLogger(UserDAOImpl.class.getName());
+		if (System.getProperty("RDS_HOSTNAME") != null) {
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = System.getProperty("RDS_USERNAME");
+		      String password = System.getProperty("RDS_PASSWORD");
+		      String hostname = System.getProperty("RDS_HOSTNAME");
+		      String port = System.getProperty("RDS_PORT");
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      logger.info("Getting remote connection with connection string from environment variables.");
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+		    } catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }
+		    return con;
+		}else {
+			//This is only used for development, when project is not deployed
+			//hard coded connection
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = "root";
+		      String password = "root1234";
+		      String hostname = "awseb-e-bybgza4twa-stack-awsebrdsdatabase-57j2ooqi4tt8.cxocrl7z2rgw.us-east-2.rds.amazonaws.com";
+		      String port = "3306";
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+			}catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }		      
+		}
+		return con;
 	}
 	
 	private void closeConnection(Connection connection) {
@@ -75,7 +115,7 @@ public class UserDAOImpl implements UserDAO {
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM User WHERE email = " + email + ";");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM User WHERE email = '" + email + "';");
 	
 			// Check if user exists
 			if (resultSet.next() == false) {
@@ -87,9 +127,11 @@ public class UserDAOImpl implements UserDAO {
 				result = "incorrect password";
 			}
 			
-			// Check if regular user or admin			
+			// Check if regular user or admin		
+			//changed to also include user id for easy user lookup in Login Servlet
 			else {
 				result = (resultSet.getInt("isAdmin") == 0) ? "customer" : "admin";
+				result += " " + resultSet.getInt("id");
 			}
 
 		} catch (SQLException e) {
@@ -116,7 +158,8 @@ public class UserDAOImpl implements UserDAO {
 		String country = user.getAddress().getCountry();
 		String postalCode = user.getAddress().getPostalCode();
 		String phone = user.getAddress().getPhone();
-				
+		System.out.println("USER INFRO: " + user.toString());
+
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -124,6 +167,7 @@ public class UserDAOImpl implements UserDAO {
 			String addressSQL = "INSERT into Address VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement addressStatement = connection.prepareStatement(addressSQL);
 			addressStatement.setInt(1, addressId);
+			System.out.println("Street adress: " + streetAddress);
 			addressStatement.setString(2, streetAddress);
 			addressStatement.setString(3, province);
 			addressStatement.setString(4, country);

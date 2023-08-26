@@ -9,21 +9,60 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javax.naming.*;
+
+
+import org.apache.catalina.Context;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 import model.Brand;
 import model.Category;
 import model.Item;
+import java.util.logging.*;
 
 public class ItemDAOImpl implements ItemDAO {
 	
-	static {
-		try {
-			Class.forName("org.sqlite.JDBC");
-		} catch (ClassNotFoundException ex) {}
-	}
-
 	private Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:sqlite:C:\\Users\\Leah\\Downloads\\teamJIL.db");
+		Connection con = null;
+	      Logger logger= Logger.getLogger(ItemDAOImpl.class.getName());
+		if (System.getProperty("RDS_HOSTNAME") != null) {
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = System.getProperty("RDS_USERNAME");
+		      String password = System.getProperty("RDS_PASSWORD");
+		      String hostname = System.getProperty("RDS_HOSTNAME");
+		      String port = System.getProperty("RDS_PORT");
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      logger.info("Getting remote connection with connection string from environment variables.");
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+		    } catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }
+		    return con;
+		}else {
+			//This is only used for development, when project is not deployed
+			//hard coded connection
+			try {
+		      Class.forName("com.mysql.jdbc.Driver");
+		      String userName = "root";
+		      String password = "root1234";
+		      String hostname = "awseb-e-bybgza4twa-stack-awsebrdsdatabase-57j2ooqi4tt8.cxocrl7z2rgw.us-east-2.rds.amazonaws.com";
+		      String port = "3306";
+		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
+		      con = DriverManager.getConnection(jdbcUrl);
+		      logger.info("Remote connection successful.");
+		      return con;
+			}catch (ClassNotFoundException e) { 
+		    	logger.warning(e.toString());
+		    }catch (SQLException e) { 
+		    	logger.warning(e.toString());
+		    }		      
+		}
+		return con;
 	}
 	
 	private void closeConnection(Connection connection) {
@@ -41,7 +80,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public Item findItemById(String id) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id " + 
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id " + 
 				"WHERE Item.itemID = '" + id + "';";
 		queryItems(query, result);;
 		return result.isEmpty()? null : result.get(0);
@@ -50,7 +89,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findAllItems() {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id;";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id";
 		queryItems(query, result);;
 		return result;
 	}
@@ -82,7 +121,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findItemsByCategory(String category) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Category.name='" + category + "';";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Category.name='" + category + "';";
 		queryItems(query, result);
 		return result;
 	}
@@ -90,7 +129,7 @@ public class ItemDAOImpl implements ItemDAO {
 	@Override
 	public List<Item> findItemsByBrand(String brand) {
 		List<Item> result = new ArrayList<Item>();		
-		String query = "SELECT * FROM Item INNER JOIN Category, Brand ON Item.category = Category.id AND Item.brand = Brand.id WHERE Brand.name='" + brand + "';";
+		String query = "SELECT * FROM Item INNER JOIN Category ON Item.category = Category.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Brand.name='" + brand + "';";
 		queryItems(query, result);
 		return result;
 	}
