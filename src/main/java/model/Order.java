@@ -1,7 +1,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
 
 public class Order implements Serializable {
 	
@@ -11,9 +11,9 @@ public class Order implements Serializable {
 	private User customer;
 	private String dateOfPurchase;
 	private int total;
-	private List<Item> items;
+	private HashMap<Item, Integer> items;
 	
-	public Order(int id, User customer, String dateOfPurchase, int total, List<Item> items) {
+	public Order(int id, User customer, String dateOfPurchase, int total, HashMap<Item, Integer> items) {
 		super();
 		this.id = id;
 		this.customer = customer;
@@ -54,11 +54,11 @@ public class Order implements Serializable {
 		this.total = total;
 	}
 
-	public List<Item> getItems() {
+	public HashMap<Item, Integer> getItems() {
 		return items;
 	}
 
-	public void setItems(List<Item> items) {
+	public void setItems(HashMap<Item, Integer> items) {
 		this.items = items;
 	}
 
@@ -67,4 +67,5 @@ public class Order implements Serializable {
 		return "Order [id=" + id + ", customer=" + customer + ", dateOfPurchase=" + dateOfPurchase + ", total=" + total
 				+ ", items=" + items + "]";
 	}
+
 }

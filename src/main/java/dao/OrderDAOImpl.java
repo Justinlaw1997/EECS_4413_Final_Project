@@ -152,18 +152,19 @@ public class OrderDAOImpl implements OrderDAO {
 			orderStatement.setInt(4, order.getTotal());
 			orderStatement.execute();
 			
-			for(Item item: order.getItems()) {
-				String itemsSQL = "INSERT into ItemOrder VALUES (?, ?)";
+			for(Entry<Item, Integer> lineItem: order.getItems().entrySet()) {
+				String itemsSQL = "INSERT into ItemOrder VALUES (?, ?, ?)";
 				PreparedStatement itemStatement = connection.prepareStatement(itemsSQL);
-				itemStatement.setString(1, item.getItemID());
+				itemStatement.setString(1, lineItem.getKey().getItemID());
 				itemStatement.setInt(2, order.getId());
+				itemStatement.setInt(3, lineItem.getValue());
 				itemStatement.execute();
 				
 				// Reduce quantity of purchased items
-				int quantity = item.getQuantity();
-				quantity -= 1;
+				int quantity = lineItem.getKey().getQuantityStocked();
+				quantity -= lineItem.getValue();
 				Statement update = connection.createStatement();
-				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + item.getItemID() + "';");
+				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + lineItem.getKey().getItemID() + "';");
 			}
 			
 		} catch (SQLException e) {
@@ -184,11 +185,11 @@ public class OrderDAOImpl implements OrderDAO {
 			statement.executeUpdate("DELETE FROM ItemOrder WHERE orderId = " + id + ";");
 
 			// Re-stock cancelled items
-			for(Item item: order.getItems()) {				
-				int quantity = item.getQuantity();
-				quantity += 1;
+			for(Entry<Item, Integer> lineItem: order.getItems().entrySet()) {				
+				int quantity = lineItem.getKey().getQuantityStocked();
+				quantity += lineItem.getValue();
 				Statement update = connection.createStatement();
-				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + item.getItemID() + "';");
+				update.executeUpdate("UPDATE Item SET quantity =" + quantity + " WHERE itemId = '" + lineItem.getKey().getItemID() + "';");
 			}
 			
 		} catch (SQLException e) {
@@ -213,14 +214,16 @@ public class OrderDAOImpl implements OrderDAO {
 				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
-				List<Item> items = new ArrayList<Item>();
+				//List<Item> items = new ArrayList<Item>();
 
 				// Get the list of items associated with the order
 				Statement itemStatement = connection.createStatement();
 				ResultSet itemResultSet = itemStatement.executeQuery("SELECT * FROM ItemOrder WHERE orderId = '" + orderId + "';");
+				
+				HashMap<Item, Integer> items = new HashMap<Item, Integer>(); 
 				while(itemResultSet.next()) {
 					Item item = itemList.findItemById(itemResultSet.getString("itemId"));
-					items.add(item);
+					items.put(item, itemResultSet.getInt("quantity"));					
 				}
 						
 				Order order = new Order(orderId, user, date, total, items);				

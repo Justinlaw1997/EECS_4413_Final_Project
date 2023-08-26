@@ -10,7 +10,7 @@
 <body>
 	<h2>Checkout</h2>
 	<hr>
-	<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
+	<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
 		<input type="submit" name="selection" value="Log Out" />
 	</form>
 	<h4>Welcome Back, ${user.getFirstName()} ${user.getLastName()}</h4>

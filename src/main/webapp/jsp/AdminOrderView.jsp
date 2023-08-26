@@ -99,7 +99,7 @@
 			         
 					 <!-- Fetch individual items from each order -->
 			         <td><c:forEach items="${order.getItems()}" var="item">
-				      	${item.getName()}<br>
+				      	${item.getKey().getName()} x ${item.getValue()}<br>
 				 	 </c:forEach></td>
 				 	 
 			         <td> $${order.getTotal()} </td>
