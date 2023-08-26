@@ -123,13 +123,9 @@ public class LoginServlet extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			Address address = new Address(1, streetAddress, province, country, postalCode, phone);
-			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
-			address.setId(address.toString().hashCode());
+			Address address = new Address(streetAddress, province, country, postalCode, phone);
 			//isadmin is 0 for all regular users, isadmin = 1 must be changed from the admin page
-			User user = new User(1, firstName, lastName, address, 0, email, password);
-			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
-			user.setId(user.toString().hashCode());
+			User user = new User(firstName, lastName, address, 0, email, password);
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER

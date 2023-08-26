@@ -95,7 +95,14 @@
 	        <c:forEach items="${requestScope.orders}" var="order">
 				 <tr>
 					 <td> ${order.getId()} </td>
-			         <td> ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()}</td>
+					 <c:choose>
+					 	<c:when test="${order.getCustomer() != null}">
+			         		<td> ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()}</td>
+			         	</c:when>
+			         	<c:otherwise>	
+			         		<td>Deleted User</td>
+			         	</c:otherwise>
+			         </c:choose>
 			         
 					 <!-- Fetch individual items from each order -->
 			         <td><c:forEach items="${order.getItems()}" var="item">

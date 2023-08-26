@@ -105,7 +105,7 @@ public class UserDAOImpl implements UserDAO {
 		List<User> result = new ArrayList<User>();		
 		String query = "SELECT * FROM User INNER JOIN Address ON User.addressID = Address.id WHERE User.id ='" + id + "';";
 		queryUsers(query, result);
-		return result.isEmpty()? null : result.get(0);
+		return result.isEmpty() ? null : result.get(0);
 	}
 	
 	@Override
@@ -145,45 +145,45 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Override
 	public void registerUser(User user) {	
-		int userId = user.getId();
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
 		int isAdmin = user.getIsAdmin();
 		String email = user.getEmail();
 		String password = user.getPassword();
-		
-		int addressId = user.getAddress().getId();
+
 		String streetAddress = user.getAddress().getStreetAddress();
 		String province = user.getAddress().getProvince();
 		String country = user.getAddress().getCountry();
 		String postalCode = user.getAddress().getPostalCode();
 		String phone = user.getAddress().getPhone();
-		System.out.println("USER INFRO: " + user.toString());
 
 		Connection connection = null;
 		try {
 			connection = getConnection();
 
-			String addressSQL = "INSERT into Address VALUES (?, ?, ?, ?, ?, ?);";
-			PreparedStatement addressStatement = connection.prepareStatement(addressSQL);
-			addressStatement.setInt(1, addressId);
-			System.out.println("Street adress: " + streetAddress);
-			addressStatement.setString(2, streetAddress);
-			addressStatement.setString(3, province);
-			addressStatement.setString(4, country);
-			addressStatement.setString(5, postalCode);
-			addressStatement.setString(6, phone);
+			String addressSQL = "INSERT into Address (streetAddress, province, country, postalCode, phone) VALUES (?, ?, ?, ?, ?);";
+			PreparedStatement addressStatement = connection.prepareStatement(addressSQL, Statement.RETURN_GENERATED_KEYS);
+			addressStatement.setString(1, streetAddress);
+			addressStatement.setString(2, province);
+			addressStatement.setString(3, country);
+			addressStatement.setString(4, postalCode);
+			addressStatement.setString(5, phone);
 			addressStatement.execute();
+			
+			ResultSet addressKeys = addressStatement.getGeneratedKeys();
+			int addressId = 0;
+			if (addressKeys.next()) {
+				addressId = addressKeys.getInt(1);
+			}
 
-			String userSQL = "INSERT into User VALUES (?, ?, ?, ?, ?, ?, ?);";
+			String userSQL = "INSERT into User (firstName, lastName, addressID, isAdmin, email, password) VALUES (?, ?, ?, ?, ?, ?);";
 			PreparedStatement userStatement = connection.prepareStatement(userSQL);
-			userStatement.setInt(1, userId);
-			userStatement.setString(2, firstName);
-			userStatement.setString(3, lastName);
-			userStatement.setInt(4, addressId);
-			userStatement.setInt(5, isAdmin);
-			userStatement.setString(6, email);
-			userStatement.setString(7, password);
+			userStatement.setString(1, firstName);
+			userStatement.setString(2, lastName);
+			userStatement.setInt(3, addressId);
+			userStatement.setInt(4, isAdmin);
+			userStatement.setString(5, email);
+			userStatement.setString(6, password);
 			userStatement.execute();
 			
 		} catch (SQLException e) {
@@ -197,7 +197,7 @@ public class UserDAOImpl implements UserDAO {
 	public void removeUser(User user) {
 		int userId = user.getId();
 		int addressId = user.getAddress().getId();
-		
+
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -243,14 +243,14 @@ public class UserDAOImpl implements UserDAO {
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(query);
 			
-			while(resultSet.next()) {	
-				int addressId = resultSet.getInt("addressId");
+			while(resultSet.next()) {
+				int id = resultSet.getInt("id");
 				String streetAddress = resultSet.getString("streetAddress");
 				String province = resultSet.getString("province");
 				String country = resultSet.getString("country");
 				String postalCode = resultSet.getString("postalCode");
 				String phone = resultSet.getString("phone");
-				Address address = new Address(addressId, streetAddress, province, country, postalCode, phone);
+				Address address = new Address(id, streetAddress, province, country, postalCode, phone);
 				
 				int userId = resultSet.getInt("id");
 				String firstName = resultSet.getString("firstName");

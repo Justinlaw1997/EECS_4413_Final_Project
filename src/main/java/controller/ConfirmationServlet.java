@@ -54,7 +54,6 @@ public class ConfirmationServlet extends HttpServlet {
 			
 		} else {
 			// Create a new Order
-			int id = 1;
 			User user = (User) session.getAttribute("user");
 			String date = new Date().toString();
 			Cart cart = (Cart) session.getAttribute("cart");
@@ -68,13 +67,12 @@ public class ConfirmationServlet extends HttpServlet {
 				total += item.getPrice() * item.getQuantityPurchased();
 			}
 			
-			Order order = new Order(id, user, date, total, lineItems);		
-			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
-			order.setId(order.toString().hashCode());
+			Order order = new Order(user, date, total, lineItems);		
 			
 			// Save the new order to the database
 			OrderDAO dao = new OrderDAOImpl();
-			dao.createOrder(order);
+			int orderId = dao.createOrder(order);
+			order.setId(orderId);
 			
 			// Clear the cart
 			cart.clear();
