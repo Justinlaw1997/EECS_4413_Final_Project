@@ -10,6 +10,10 @@
 <body>
 	<h2>Checkout</h2>
 	<hr>
+	<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
+		<input type="submit" name="selection" value="Log Out" />
+	</form>
+	<h4>Welcome Back, ${user.getFirstName()} ${user.getLastName()}</h4>
 	<h4>Please verify your shipping information and enter your credit card information below!</h4>
 	<p> To submit your order, press the "Confirm Order" button.</p>
 	<br>

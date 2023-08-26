@@ -8,14 +8,14 @@
 </head>
 <body>
 	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
-		<%if(request.getAttribute("error")!=null){ %>
-				<script> alert("hi") </script>
+		<%if(request.getAttribute("error")=="no user"){ %>
+			<script> alert("Please Login or Register to Complete Your Purchase") </script>
 		<%} %>
 		
 		<h3>User Name</h3>
 		<input type='text' name='email'>Enter Email</input>
 		<h3>Pass Word</h3>
-		<input type='text' name='password'>Enter Password</input>
+		<input type='password' name='password'>Enter Password</input>
 		
 		<div id='login-signup'>
 		<input type='submit' name='user-action' value='login'>Login</input>

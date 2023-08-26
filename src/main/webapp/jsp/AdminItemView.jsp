@@ -14,11 +14,13 @@
 		<h2>Manage Items</h2>
 	 
         <!-- Switch Views or Log Out -->
+        <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+       		<input type="submit" name="selection" value="Log Out" />
+		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
        		<input type="submit" name="selection" value="Manage Orders" />
        		<input type="submit" name="selection" value="Manage Users" />
-       		<input type="submit" name="selection" value="Log Out" />
-		</form><br>
+       	</form><br>
         
         <table border='1' cellpadding='6'>
 	        <tr>

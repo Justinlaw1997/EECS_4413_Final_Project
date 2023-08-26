@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import model.Item;
@@ -80,7 +82,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public Order findOrderById(int id) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM 'Order' WHERE id = " + id + ";";
+		String query = "SELECT * FROM Orders WHERE id = " + id + ";";
 		queryOrders(query, result);
 		return result.isEmpty()? null : result.get(0);
 	}
@@ -88,7 +90,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrders() {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM 'Order';";
+		String query = "SELECT * FROM Orders;";
 		queryOrders(query, result);
 		return result;
 	}
@@ -96,7 +98,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByCustomer(int customerId) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM 'Order' WHERE customerID = " + customerId + ";";
+		String query = "SELECT * FROM Orders WHERE customerID = " + customerId + ";";
 		queryOrders(query, result);
 		return result;
 	}
@@ -104,8 +106,8 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByItem(String itemId) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN 'Order' " + 
-				"ON ItemOrder.orderId = 'Order'.id WHERE Item.itemID = '" + itemId + "' GROUP BY 'Order'.id;";
+		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN Orders " + 
+				"ON ItemOrder.orderId = Orders.id WHERE Item.itemID = '" + itemId + "' GROUP BY Orders.id;";
 		queryOrders(query, result);
 		return result;	
 	}
@@ -113,8 +115,8 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByBrand(String brand) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN 'Order' ON ItemOrder.orderId = " +
-				"'Order'.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Brand.name = \"" + brand + "\" GROUP BY 'Order'.id";
+		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN Orders ON ItemOrder.orderId = " +
+				"Orders.id INNER JOIN Brand ON Item.brand = Brand.id WHERE Brand.name = \"" + brand + "\" GROUP BY Orders.id";
 		queryOrders(query, result);
 		return result;
 	}
@@ -122,8 +124,8 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByCategory(String category) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN 'Order' ON ItemOrder.orderId = " +
-				"'Order'.id INNER JOIN Category ON Item.category = Category.id WHERE Category.name = \"" + category + "\" GROUP BY 'Order'.id;";
+		String query = "SELECT * FROM ItemOrder INNER JOIN Item ON ItemOrder.itemId = Item.itemID INNER JOIN Orders ON ItemOrder.orderId = " +
+				"Orders.id INNER JOIN Category ON Item.category = Category.id WHERE Category.name = \"" + category + "\" GROUP BY Orders.id;";
 		queryOrders(query, result);
 		return result;
 	}
@@ -131,7 +133,7 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByDate(String date) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM 'Order' WHERE dateOfPurchase = \"" + date + "\";";
+		String query = "SELECT * FROM Orders WHERE dateOfPurchase = \"" + date + "\";";
 		queryOrders(query, result);
 		return result;
 	}
@@ -142,7 +144,7 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			connection = getConnection();
 			
-			String orderSQL = "INSERT into 'Order' VALUES (?, ?, ?, ?)";
+			String orderSQL = "INSERT into Orders VALUES (?, ?, ?, ?)";
 			PreparedStatement orderStatement = connection.prepareStatement(orderSQL);
 			orderStatement.setInt(1, order.getId());
 			orderStatement.setInt(2, order.getCustomer().getId());
@@ -178,8 +180,8 @@ public class OrderDAOImpl implements OrderDAO {
 		try {
 			connection = getConnection();
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("DELETE FROM 'Order' WHERE id = " + id + ";");
-			statement.executeUpdate("DELETE FROM 'ItemOrder' WHERE orderId = " + id + ";");
+			statement.executeUpdate("DELETE FROM Orders WHERE id = " + id + ";");
+			statement.executeUpdate("DELETE FROM ItemOrder WHERE orderId = " + id + ";");
 
 			// Re-stock cancelled items
 			for(Item item: order.getItems()) {				

@@ -2,6 +2,8 @@ package controller;
 
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -10,6 +12,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Cart;
+import model.Item;
+import model.Order;
+import model.User;
+import dao.OrderDAO;
+import dao.OrderDAOImpl;
 
 /**
  * Servlet implementation class ConfimationServlet
@@ -42,8 +50,33 @@ public class ConfirmationServlet extends HttpServlet {
 		if (counter % 3 == 0) {
 			rd = request.getRequestDispatcher("jsp/CardFailed.jsp");
 			rd.forward(request, response);
+			
 		} else {
-			// save order to the databse?
+			// Create a new Order
+			int id = 1;
+			User user = (User) session.getAttribute("user");
+			String date = new Date().toString();
+			Cart cart = (Cart) session.getAttribute("cart");
+			List<Item> items = cart.getItems();
+			
+			int total = 0;
+			for (Item item: items) {
+				total += item.getPrice();
+			}
+			
+			Order order = new Order(id, user, date, total, items);		
+			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
+			order.setId(order.toString().hashCode());
+			
+			// Save the new order to the database
+			OrderDAO dao = new OrderDAOImpl();
+			dao.createOrder(order);
+			
+			// Clear the cart
+			cart.clear();
+			
+			// Forward the order to the success page
+			request.setAttribute("order", order);
 			rd = request.getRequestDispatcher("jsp/OrderSuccess.jsp");
 			rd.forward(request, response);
 		}

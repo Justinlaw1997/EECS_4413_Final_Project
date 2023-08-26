@@ -211,6 +211,30 @@ public class UserDAOImpl implements UserDAO {
 			closeConnection(connection);
 		}
 	}
+	
+	@Override
+	public void changeUserStatus(int id) {
+		User user = findUserById(id);
+		int value;
+		
+		if (user.getIsAdmin() == 0) {
+			value = 1;
+		} else {
+			value = 0;
+		}
+		
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate("UPDATE User SET isAdmin = " + value + " WHERE id = " + id + ";");		
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+	}
 
 	private void queryUsers(String query, List<User> result) {	
 		Connection connection = null;

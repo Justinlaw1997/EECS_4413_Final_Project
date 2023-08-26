@@ -47,38 +47,39 @@ public class CartServlet extends HttpServlet {
 		}
 	 
 	    RequestDispatcher rd;
-	      
-	    try {
-	 
-	    	String todo = request.getParameter("todo");
-	         
-	    	if (todo.equals("add") ) {
-	    		
-	    		// Items coming from the Catalog Page
-			    String[] ids = request.getParameterValues("id");
-			    
-			    // Item coming from a single Item Page
-			    String singleId = request.getParameter("singleId");
-          
-			    if (ids == null) {
-			    	if (singleId == null) {
-		    			rd = request.getRequestDispatcher("jsp/CartNoItemsView.jsp");
-		    			rd.forward(request, response);
-			    	}
-			    	
-			    	// Set the single item to an array and continue
-			    	ids = new String[1];
-			    	ids[0] = singleId;
-			     }
-	    		
-	    		for (String id : ids) {
-	
-	    			// Finds the specific item within the database
-	    			ItemDAO dao = new ItemDAOImpl();
-	    			Item it  = dao.findItemById(id);
-	    			it.setQuantity(Integer.parseInt(request.getParameter("qty" + id)));
-	    			
-	    			// Sets all of the item description names to a variable
+    	String todo = request.getParameter("todo");
+    	
+    	if (todo.equals("view")) {
+    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
+    		rd.forward(request, response);
+    	}
+    	else if (todo.equals("add") ) {
+    		
+    		// Items coming from the Catalog Page
+		    String[] ids = request.getParameterValues("id");
+		    
+		    // Item coming from a single Item Page
+		    String singleId = request.getParameter("singleId");
+      
+		    if (ids == null) {
+		    	if (singleId == null) {
+	    			rd = request.getRequestDispatcher("jsp/CartNoItemsView.jsp");
+	    			rd.forward(request, response);
+		    	}
+		    	
+		    	// Set the single item to an array and continue
+		    	ids = new String[1];
+		    	ids[0] = singleId;
+		     }
+    		
+    		for (String id : ids) {
+
+    			// Finds the specific item within the database
+    			ItemDAO dao = new ItemDAOImpl();
+    			Item it  = dao.findItemById(id);
+    			it.setQuantity(Integer.parseInt(request.getParameter("qty" + id)));
+    			
+    			// Sets all of the item description names to a variable
 	    			String itemID = it.getItemID();
 	    			String name = it.getName();
 	    			String description = it.getDescription();
@@ -94,31 +95,27 @@ public class CartServlet extends HttpServlet {
 	    		}
  
 	    		// Forwards the request to the view jsp
-	    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
+    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
 	    		rd.forward(request, response);
   
 	    	} 
 	    	else if (todo.equals("update")) {
-	    		// Updates the quantity of the item
-	    		String id = request.getParameter("id"); 
-	    		int qtyNew = Integer.parseInt(request.getParameter("qty" + id));
-	    		cart.update(id, qtyNew);
+    		// Updates the quantity of the item
+    		String id = request.getParameter("id"); 
+    		int qtyNew = Integer.parseInt(request.getParameter("qty" + id));
+    		cart.update(id, qtyNew);
 
-	    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
-	    		rd.forward(request, response);
-	    	}
-	    	else if (todo.equals("remove")) { 
-	    		// Removes the item from the cart
-	    		String id = request.getParameter("id");  
-	    		cart.remove(id);
+    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
+    		rd.forward(request, response);
+    	}
+    	else if (todo.equals("remove")) { 
+    		// Removes the item from the cart
+    		String id = request.getParameter("id");  
+    		cart.remove(id);
 
-	    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
-	    		rd.forward(request, response);
-	    	} 
-	    }finally {
-     
-    
-	    }
+    		rd = request.getRequestDispatcher("jsp/CartView.jsp");
+    		rd.forward(request, response);
+    	} 
 
 	}
 
