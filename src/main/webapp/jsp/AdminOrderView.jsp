@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Admin Order Page</title>
-		<link href="css/style.css" rel="stylesheet">
+		<link href="css/adminStyle.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -15,11 +15,11 @@
 	 
 	    <!-- Switch Views or Log Out -->
 	    <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
-       		<input type="submit" name="selection" value="Log Out" />
+       		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="selection" value="Manage Items" />
-       		<input type="submit" name="selection" value="Manage Users" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Items" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Users" />
        	</form><br>
 		
 		<br> Filter Orders:<br>
@@ -31,7 +31,7 @@
 					<option value="${customer.getId()}">${customer.getFirstName()} ${customer.getLastName()}</option>
 				</c:forEach>
    			</select>
-			<input type="submit" name="filterOrders" value="Filter by Customer" />
+			<input type="submit" class="button-1" name="filterOrders" value="Filter by Customer" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 		
@@ -42,7 +42,7 @@
 					<option value="${item.getItemID()}">${item.getName()}</option>
 				</c:forEach>
    			</select>
-			<input type="submit" name="filterOrders" value="Filter by Item" />
+			<input type="submit" class="button-1" name="filterOrders" value="Filter by Item" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 		
@@ -53,7 +53,7 @@
 					<option value="${brand.getName()}">${brand.getName()}</option>
 				</c:forEach>
    			</select>
-			<input type="submit" name="filterOrders" value="Filter by Brand" />
+			<input type="submit" class="button-1" name="filterOrders" value="Filter by Brand" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 		
@@ -64,20 +64,20 @@
 					<option value="${category.getName()}">${category.getName()}</option>
 				</c:forEach>
    			</select>
-			<input type="submit" name="filterOrders" value="Filter by Category" />
+			<input type="submit" class="button-1" name="filterOrders" value="Filter by Category" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 				
 		<!-- Filter by Date Input -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
    			<input id="orderSelect" name="date" id="date">
-			<input type="submit" name="filterOrders" value="Filter by Date" />
+			<input type="submit" class="button-1" name="filterOrders" value="Filter by Date" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 		
 		<!-- Clear Filters -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="filterOrders" value="Clear Filters" />
+       		<input type="submit" class="button-1" name="filterOrders" value="Clear Filters" />
        		<input type="hidden" name="selection" value="Manage Orders" />
 		</form><br>
 		
@@ -94,26 +94,26 @@
 	      
 	        <c:forEach items="${requestScope.orders}" var="order">
 				 <tr>
-					 <td> ${order.getId()} </td>
+					 <td><p> ${order.getId()} </p></td>
 					 <c:choose>
 					 	<c:when test="${order.getCustomer() != null}">
-			         		<td> ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()}</td>
+			         		<td><p> ${order.getCustomer().getFirstName()} ${order.getCustomer().getLastName()}</p></td>
 			         	</c:when>
 			         	<c:otherwise>	
-			         		<td>Deleted User</td>
+			         		<td><p>Deleted User</p></td>
 			         	</c:otherwise>
 			         </c:choose>
 			         
 					 <!-- Fetch individual items from each order -->
-			         <td><c:forEach items="${order.getItems()}" var="item">
+			         <td><p><c:forEach items="${order.getItems()}" var="item">
 				      	${item.getKey().getName()} x ${item.getValue()}<br>
-				 	 </c:forEach></td>
+				 	 </c:forEach></p></td>
 				 	 
-			         <td> $${order.getTotal()} </td>
-			         <td> ${order.getDateOfPurchase()} </td>
+			         <td><p> $${order.getTotal()} </p></td>
+			         <td><p> ${order.getDateOfPurchase()} </p></td>
 			         
 			         <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-					 	<input type="submit" value="Delete" />
+					 	<input type="submit" class="button-1" value="Delete" />
 					 	<input type="hidden" name="selection" value="Manage Orders" />
 					 	<input type="hidden" name="delete" value="${order.getId()}" />
 					 </form></td> 

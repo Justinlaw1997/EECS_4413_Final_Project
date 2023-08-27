@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Admin Item View</title>
-		<link href="css/style.css" rel="stylesheet">
+		<link href="css/adminStyle.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -15,11 +15,11 @@
 	 
         <!-- Switch Views or Log Out -->
         <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
-       		<input type="submit" name="selection" value="Log Out" />
+       		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="selection" value="Manage Orders" />
-       		<input type="submit" name="selection" value="Manage Users" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Orders" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Users" />
        	</form><br>
         
         <table border='1' cellpadding='6'>
@@ -36,19 +36,19 @@
 
 	        <c:forEach items="${requestScope.items}" var="item">
 			 <tr>			 	
-				 <td> ${item.getItemID()} </td>
+				 <td><p> ${item.getItemID()} </p></td>
 				 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
-				 <td> ${item.getName()} </td>
-		         <td> ${item.getDescription()} </td>
-		         <td> ${item.getCategory().getName()} </td>
-		         <td> ${item.getBrand().getName()} </td>
-		         <td> $ ${item.getPrice()} </td>
+				 <td><p> ${item.getName()} </p></td>
+		         <td><p> ${item.getDescription()} </p></td>
+		         <td><p> ${item.getCategory().getName()} </p></td>
+		         <td><p> ${item.getBrand().getName()} </p></td>
+		         <td><p> $ ${item.getPrice()} </p></td>
 		         
    	  			<td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
    	  			    <input type="hidden" name="selection" value="Manage Items" /> 
 	                <input type='hidden' name='update' value='${ item.getItemID() }' /> 
 	                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityStocked() }' />
-	                <input type='submit' value='Update' />
+	                <input type='submit' class="button-1" value='Update' />
 			    </form></td>
 				 
 			 </tr>
