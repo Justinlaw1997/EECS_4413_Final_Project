@@ -55,7 +55,6 @@ public class ConfirmationServlet extends HttpServlet {
 		} else {
 			// Create a new Order
 			User user = (User) session.getAttribute("user");
-			System.out.println(user.toString());
 			String date = new Date().toString();
 			Cart cart = (Cart) session.getAttribute("cart");
 			List<Item> items = cart.getItems();
