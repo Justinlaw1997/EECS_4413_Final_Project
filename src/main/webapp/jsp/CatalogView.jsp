@@ -80,13 +80,13 @@
 		</form>
 
 
-        <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
+        <form id='table-form' method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
         
 	        <table border='1' cellpadding='6'>
 		        <tr>
 		        	<th></th>
 		        	<th>Image</th>
-			        <th>Item name</th>
+			        <th width="200px">Item name</th>
 			        <th>Category</th>
 			        <th>Brand</th>
 			        <th>Price</th>
@@ -96,9 +96,9 @@
 	
 		        <c:forEach items="${requestScope.allItemsList}" var="item">
 				 <tr>
-				 	 <td><input type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
+				 	 <td><input id='big-check' type='checkbox' name='id' value='${item.getItemID()}'  /> </td>
 					 <td><img src="${item.getImage()}" alt="${item.getName()}"></td>
-					 <td> ${item.getName()} </td>
+					 <td width="200px"> ${item.getName()} </td>
 					 <td> ${item.getCategory().getName()}</td>
 					 <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>

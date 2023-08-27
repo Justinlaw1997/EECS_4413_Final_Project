@@ -29,7 +29,6 @@ img {
 body{
 	font-family: 'Nunito';font-size: 22px;
 	margin: auto;
-	width: 50%;
 	text-align: center;
 	display: block;
 	background: linear-gradient(45deg, #49a09d, #5f2c82);
@@ -142,10 +141,11 @@ body {
 }
 
 table {
-	width: 800px;
+	width: 85%;
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+	margin:auto;
 }
 
 th,
@@ -158,8 +158,9 @@ td {
 th {
 	text-align: left;
 }
-
-
+#table-form{
+	width: 100%;
+}
 th {
 	background-color: #55608f;
 }
@@ -188,4 +189,19 @@ td {
   margin-left: auto;
   margin-right: auto;
   height: 400px;
+}
+#big-check{
+	width:50px;
+	height:50px;
+	 text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  font-size: 12px;
+  color: #55608f;
+}
+
+#big-check:checked{
+	width:50px;
+	height:50px;
+ 	text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+  font-size: 12px;
+  color: #55608f;
 }
