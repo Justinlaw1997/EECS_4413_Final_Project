@@ -11,8 +11,6 @@ import model.User;
 import java.io.IOException;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import dao.OrderDAO;
 import dao.OrderDAOImpl;
 

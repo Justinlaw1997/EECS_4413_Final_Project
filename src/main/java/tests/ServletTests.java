@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import org.junit.jupiter.api.Test;
 
-class AdminServletTest {
+class ServletTests {
 	
 	private int exit;
 	

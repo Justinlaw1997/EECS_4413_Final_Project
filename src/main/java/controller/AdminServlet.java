@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import dao.OrderDAO;
 import dao.OrderDAOImpl;
@@ -63,6 +62,13 @@ public class AdminServlet extends HttpServlet {
 	    	rd.forward(request, response);
 	    	
 		} else if (selection.equals("Manage Items")) {
+			// Check to see if an Quantity Update has been requested
+			if (request.getParameter("update") != null) {
+				String itemId = request.getParameter("update");
+				int qtyNew = Integer.parseInt(request.getParameter("qty" + itemId));						
+				itemDao.updateQuantity(itemId, qtyNew);
+			}
+			
 			// Fetch all of the items
 			items = itemDao.findAllItems();
 			request.setAttribute("items", items);

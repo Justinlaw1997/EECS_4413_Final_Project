@@ -182,6 +182,23 @@ public class ItemDAOImpl implements ItemDAO {
 		
 		return result;
 	}
+	
+	@Override
+	public void updateQuantity(String itemID, int quantity) {
+		String query = "UPDATE Item SET quantity = " + quantity + " WHERE itemID = '" + itemID + "';";
+		
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}	
+	}
 
 	private void queryItems(String query, List<Item> result) {	
 		Connection connection = null;

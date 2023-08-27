@@ -43,7 +43,14 @@
 		         <td> ${item.getCategory().getName()} </td>
 		         <td> ${item.getBrand().getName()} </td>
 		         <td> $ ${item.getPrice()} </td>
-		         <td> ${item.getQuantityStocked()} </td>
+		         
+   	  			<td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+   	  			    <input type="hidden" name="selection" value="Manage Items" /> 
+	                <input type='hidden' name='update' value='${ item.getItemID() }' /> 
+	                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityStocked() }' />
+	                <input type='submit' value='Update' />
+			    </form></td>
+				 
 			 </tr>
 			 </c:forEach>
         </table><br /> 
