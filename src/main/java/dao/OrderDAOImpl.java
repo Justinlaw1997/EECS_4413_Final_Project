@@ -232,7 +232,7 @@ public class OrderDAOImpl implements OrderDAO {
 				while(itemResultSet.next()) {
 					Item item = new Item();
 					item.setName(itemResultSet.getString(2));
-					items.put(item, itemResultSet.getInt("quantity"));					
+					items.put(item, itemResultSet.getInt(10));					
 				}
 
 				// Get the name of the customer
