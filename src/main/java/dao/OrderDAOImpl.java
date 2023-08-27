@@ -10,10 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
-import model.Brand;
-import model.Category;
 import model.Item;
 import model.Order;
 import model.User;
@@ -28,7 +25,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-	      Logger logger= Logger.getLogger(OrderDAOImpl.class.getName());
+
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -206,7 +203,8 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	}
 	
-	private void queryOrders(String query, List<Order> result) {			
+	private void queryOrders(String query, List<Order> result) {
+		UserDAOImpl customer = new UserDAOImpl();
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -215,6 +213,7 @@ public class OrderDAOImpl implements OrderDAO {
 			
 			while(resultSet.next()) {
 				int orderId = resultSet.getInt("id");
+				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
 
@@ -222,7 +221,6 @@ public class OrderDAOImpl implements OrderDAO {
 				String itemQuery = "SELECT * FROM Item " + 
 						"INNER JOIN ItemOrder ON ItemOrder.itemId = Item.itemID " +
 						"INNER JOIN Orders ON Orders.id = ItemOrder.orderId " + 
-						"INNER JOIN User ON User.id = Orders.customerID  " +
 						"WHERE orderId = " + orderId + ";";
 				Statement itemStatement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 				ResultSet itemResultSet = itemStatement.executeQuery(itemQuery);
@@ -232,18 +230,12 @@ public class OrderDAOImpl implements OrderDAO {
 				while(itemResultSet.next()) {
 					Item item = new Item();
 					item.setName(itemResultSet.getString(2));
-					items.put(item, itemResultSet.getInt(10));					
+					items.put(item, itemResultSet.getInt(10));		
 				}
 
-				// Get the name of the customer
-				itemResultSet.first();
-				User customer = new User();
-				customer.setFirstName(itemResultSet.getString("firstName"));
-				customer.setLastName(itemResultSet.getString("lastName"));
-						
 				Order order = new Order();	
 				order.setId(orderId);
-				order.setCustomer(customer);
+				order.setCustomer(user);
 				order.setDateOfPurchase(date);
 				order.setDateOfPurchase(date);
 				order.setTotal(total);

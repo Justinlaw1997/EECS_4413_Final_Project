@@ -13,25 +13,25 @@
 			<%=request.getAttribute("input-error")%>
 		<%} %>
 		<h3>First Name</h3>
-		<input type='text' name='first-name'>Enter First Name</input>
+		<input type='text' name='first-name'>Enter First Name
 		<h3>Last Name</h3>
-		<input type='text' name='last-name'>Enter Last Name</input>
+		<input type='text' name='last-name'>Enter Last Name
 		<h3>Street Address</h3>
-		<input type='text' name='street-address'>Enter Street Address</input>
+		<input type='text' name='street-address'>Enter Street Address
 		<h3>Province</h3>
-		<input type='text' name='province'>Enter Province</input>
+		<input type='text' name='province'>Enter Province
 		<h3>Country</h3>
-		<input type='text' name='country'>Country</input>
+		<input type='text' name='country'>Country
 		<h3>Postal Code</h3>
-		<input type='text' name='postal-code'>Enter Postal Code</input>
+		<input type='text' name='postal-code'>Enter Postal Code
 		<h3>Phone</h3>
-		<input type='text' name='phone'>Enter Phone</input>
+		<input type='text' name='phone'>Enter Phone
 		<h3>Email</h3>
-		<input type='text' name='email'>Enter Email</input>
+		<input type='text' name='email'>Enter Email
 		<h3>Password</h3>
-		<input type='password' name='password'>Enter Password</input>
+		<input type='password' name='password'>Enter Password
 		
-		<input type='submit' name='user-action' value='signupReg'>SignUp</input>	
+		<input type='submit' name='user-action' value='signupReg'>SignUp>	
 	</form>
 </body>
 </html>
