@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.naming.*;
-
-
-import org.apache.catalina.Context;
-import org.apache.tomcat.jdbc.pool.DataSource;
 
 import model.Brand;
 import model.Category;
@@ -184,6 +179,23 @@ public class ItemDAOImpl implements ItemDAO {
 		
 		return result;
 	}
+	
+	@Override
+	public void updateQuantity(String itemID, int quantity) {
+		String query = "UPDATE Item SET quantity = " + quantity + " WHERE itemID = '" + itemID + "';";
+		
+		Connection connection = null;
+		try {
+			connection = getConnection();
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}	
+	}
 
 	private void queryItems(String query, List<Item> result) {	
 		Connection connection = null;
@@ -205,10 +217,11 @@ public class ItemDAOImpl implements ItemDAO {
 				String itemName = resultSet.getString("name");
 				String description = resultSet.getString("description");
 				int price = resultSet.getInt("price");
-				int quantity = resultSet.getInt("quantity");
+				int quantityStocked = resultSet.getInt("quantity");
+				int quantityPurchased = 0;
 				String image = "images/" + itemId + ".jpg";
 
-				Item item = new Item(itemId, itemName, description, category, brand, price, quantity, image);				
+				Item item = new Item(itemId, itemName, description, category, brand, price, quantityStocked, quantityPurchased, image);				
 				result.add(item);
 			}
 			

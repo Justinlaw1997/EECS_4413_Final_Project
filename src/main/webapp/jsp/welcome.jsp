@@ -18,7 +18,7 @@
 		<h3>User Name</h3>
 		<input type='text' name='email'>Enter Email</input>
 		<h3>Pass Word</h3>
-		<input type='text' name='password'>Enter Password</input>
+		<input type='password' name='password'>Enter Password</input>
 		
 		<div id='login-signup'>
 		<input type='submit' name='user-action' value='login'>Login</input>

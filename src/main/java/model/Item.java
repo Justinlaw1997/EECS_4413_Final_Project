@@ -12,10 +12,11 @@ public class Item implements Serializable {
 	private Category category;
 	private Brand brand;
 	private int price;
-	private int quantity;
+	private int quantityStocked;
+	private int quantityPurchased;
 	private String image;
 	
-	public Item(String itemID, String name, String description, Category category, Brand brand, int price, int quantity, String image) {
+	public Item(String itemID, String name, String description, Category category, Brand brand, int price, int quantityStocked, int quantityPurchased, String image) {
 		super();
 		this.itemID = itemID;
 		this.name = name;
@@ -23,7 +24,8 @@ public class Item implements Serializable {
 		this.category = category;
 		this.brand = brand;
 		this.price = price;
-		this.quantity = quantity;
+		this.quantityStocked = quantityStocked;
+		this.quantityPurchased = quantityPurchased;
 		this.image = image;
 	}
 	
@@ -75,12 +77,20 @@ public class Item implements Serializable {
 		this.price = price;
 	}
 	
-	public int getQuantity() {
-		return quantity;
+	public int getQuantityStocked() {
+		return quantityStocked;
 	}
 	
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
+	public void setQuantityStocked(int quantityStocked) {
+		this.quantityStocked = quantityStocked;
+	}
+	
+	public int getQuantityPurchased() {
+		return quantityPurchased;
+	}
+	
+	public void setQuantityPurchased(int quantityPurchased) {
+		this.quantityPurchased = quantityPurchased;
 	}
 	
 	public String getImage() {
@@ -90,10 +100,12 @@ public class Item implements Serializable {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Item [itemID=" + itemID + ", name=" + name + ", description=" + description + ", category=" + category
-				+ ", brand=" + brand + ", price=" + price + ", quantity=" + quantity + ", image=" + image + "]";
+				+ ", brand=" + brand + ", price=" + price + ", quantityStocked=" + quantityStocked
+				+ ", quantityPurchased=" + quantityPurchased + ", image=" + image + "]";
 	}
+	
 }

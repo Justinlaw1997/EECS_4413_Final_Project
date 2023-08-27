@@ -77,7 +77,7 @@ public class LoginServlet extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/welcome.jsp");
 				rd.forward(request, response);
 				
-			}else if(result[0].equals("admin") && adminPage.equals("go")) {
+			}else if(result[0].equals("admin") && adminPage != null && adminPage.equals("go")) {
 				//admin has been verified as an admin and wants to go to admin page
 				
 				User user = dao.findUserById(Integer.parseInt(result[1]));
@@ -86,7 +86,7 @@ public class LoginServlet extends HttpServlet {
 		        session.setAttribute("user", user);
 		        
 		        //SEND ADMIN TO ADMINISTRATION PAGE HERE
-		        RequestDispatcher rd = request.getRequestDispatcher("/AdminServlet.jsp");
+		        RequestDispatcher rd = request.getRequestDispatcher("/AdminServlet");
 				rd.forward(request, response);
 		        
 			}else if(result[0].equals("customer") || result[0].equals("admin")) {
@@ -98,7 +98,7 @@ public class LoginServlet extends HttpServlet {
 		        session.setAttribute("user", user);
 		        
 		        //send user to catalog
-		        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
+		        RequestDispatcher rd = request.getRequestDispatcher("/CatalogServlet");
 				rd.forward(request, response);
 			}
 			
@@ -114,7 +114,7 @@ public class LoginServlet extends HttpServlet {
 	        session.setAttribute("user", null);
 	        
 	        //Send guest to catalog
-	        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/CatalogServlet");
 			rd.forward(request, response);
 			
 		}else if(userAction.equals("signupReg")) {
@@ -180,13 +180,10 @@ public class LoginServlet extends HttpServlet {
 //			}else {
 //				
 //			}
-			Address address = new Address(1, streetAddress, province, country, postalCode, phone);
-			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
-			address.setId(address.toString().hashCode());
-			//isadmin is 0 for all regular users, isadmin = 1 must be injected into server to make an admin
-			User user = new User(1, firstName, lastName, address, 0, email, password);
-			//RISKY CODE, NEED TO FIND A MORE ERROR PROOF METHOD POSIBLY
-			user.setId(user.toString().hashCode());
+			Address address = new Address(streetAddress, province, country, postalCode, phone);
+			//isadmin is 0 for all regular users, isadmin = 1 must be changed from the admin page
+			User user = new User(firstName, lastName, address, 0, email, password);
+
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER
@@ -197,7 +194,7 @@ public class LoginServlet extends HttpServlet {
 	        session.setAttribute("user", user);
 	        
 	        //send user to catalog
-	        RequestDispatcher rd = request.getRequestDispatcher("/jsp/CatalogView.jsp");
+	        RequestDispatcher rd = request.getRequestDispatcher("/CatalogServlet");
 			rd.forward(request, response);
 
 		}

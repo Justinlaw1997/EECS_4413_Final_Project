@@ -3,13 +3,14 @@ package controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import dao.OrderDAO;
 import dao.OrderDAOImpl;
@@ -51,9 +52,6 @@ public class AdminServlet extends HttpServlet {
 		List<Brand> brands;
 		List<User> users;
 		List<Order> orders;		
-
-		// TODO: Move this logic somewhere in the registration servlet
-		request.getSession().setAttribute("user", userDao.findUserById(1));
 		
 		// Select which JSP View to Display
 		RequestDispatcher rd;
@@ -64,6 +62,13 @@ public class AdminServlet extends HttpServlet {
 	    	rd.forward(request, response);
 	    	
 		} else if (selection.equals("Manage Items")) {
+			// Check to see if an Quantity Update has been requested
+			if (request.getParameter("update") != null) {
+				String itemId = request.getParameter("update");
+				int qtyNew = Integer.parseInt(request.getParameter("qty" + itemId));						
+				itemDao.updateQuantity(itemId, qtyNew);
+			}
+			
 			// Fetch all of the items
 			items = itemDao.findAllItems();
 			request.setAttribute("items", items);
@@ -71,6 +76,11 @@ public class AdminServlet extends HttpServlet {
 	    	rd.forward(request, response);
 			
 		} else if (selection.equals("Manage Orders")) {
+			// Check to see if an Order deletion has been requested
+			if (request.getParameter("delete") != null) {
+				orderDao.deleteOrder(Integer.parseInt(request.getParameter("delete")));
+			}
+			
 			// Fetch All Items, Categories, Brands, and Users
 			items = itemDao.findAllItems();
 			categories = itemDao.findAllCategories();
@@ -106,7 +116,6 @@ public class AdminServlet extends HttpServlet {
 				orders = orderDao.findAllOrders();
 			}	
 			 
-			// Set request attributes
 			request.setAttribute("orders", orders);
 			request.setAttribute("items", items);
 			request.setAttribute("categories", categories);
@@ -116,7 +125,23 @@ public class AdminServlet extends HttpServlet {
 	    	rd.forward(request, response);
 	    	
 		} else if (selection.equals("Manage Users")) {
-			// Filter the Users
+			// Check to see if a User deletion has been requested
+			if (request.getParameter("delete") != null) {
+				User loggedIn = (User) request.getSession().getAttribute("user");
+				User deleteUser = userDao.findUserById(Integer.parseInt(request.getParameter("delete")));
+				if (loggedIn.getId() == deleteUser.getId()) {
+					JOptionPane.showMessageDialog(null, "Can't delete a logged in user");
+				} else {
+					userDao.removeUser(deleteUser);
+				}
+			}
+			
+			// Check to see if a User status change has been requested
+			if (request.getParameter("status") != null) {
+				userDao.changeUserStatus(Integer.parseInt(request.getParameter("status")));
+			}	
+			
+			// Filter the Remaining Users
 			String filterUsers = request.getParameter("filterUsers");
 			if (filterUsers == null) {
 				users = userDao.findAllUsers();
@@ -131,14 +156,8 @@ public class AdminServlet extends HttpServlet {
 				users = userDao.findAllUsers();
 			}	
 			
-			// Set request attributes
 			request.setAttribute("users", users);
 	    	rd = request.getRequestDispatcher("jsp/AdminUserView.jsp");
-	    	rd.forward(request, response);
-	    	
-		} else if (selection.equals("Log Out")) {
-			request.getSession().setAttribute("user", null);
-	    	rd = request.getRequestDispatcher("index.html");
 	    	rd.forward(request, response);
 	    	
 		} else {

@@ -9,6 +9,13 @@ public class Category implements Serializable {
 	private int id;
 	private String name;
 	
+	// For creating a new database entry (id values are auto-incrementing)
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+	
+	// For querying an existing brand from the database
 	public Category(int id, String name) {
 		super();
 		this.id = id;

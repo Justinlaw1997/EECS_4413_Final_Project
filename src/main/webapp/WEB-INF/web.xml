@@ -9,6 +9,24 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-
-  
+  <servlet>
+    <description></description>
+    <display-name>LogOutServlet</display-name>
+    <servlet-name>LogOutServlet</servlet-name>
+    <servlet-class>controller.LogOutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogOutServlet</servlet-name>
+    <url-pattern>/LogOutServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CustomerOrderServlet</display-name>
+    <servlet-name>CustomerOrderServlet</servlet-name>
+    <servlet-class>controller.CustomerOrderServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CustomerOrderServlet</servlet-name>
+    <url-pattern>/CustomerOrderServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

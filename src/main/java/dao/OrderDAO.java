@@ -20,7 +20,7 @@ public interface OrderDAO {
 	
 	public List<Order> findAllOrdersByDate(String date);
 	
-	public void createOrder(Order order);
+	public int createOrder(Order order);
 	
 	public void deleteOrder(int id);
 	

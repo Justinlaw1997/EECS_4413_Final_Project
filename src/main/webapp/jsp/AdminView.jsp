@@ -13,12 +13,16 @@
 	<body>
 		<h2>Welcome Back, ${sessionScope.user.getFirstName()} ${sessionScope.user.getLastName()}</h2>
 		
+		<!-- Log Out Button -->
+		<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+       		<input type="submit" name="selection" value="Log Out" />
+		</form><br>
+		
 		<!-- Output selections for the Admin -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
        		<input type="submit" name="selection" value="Manage Items" />
        		<input type="submit" name="selection" value="Manage Orders" />
        		<input type="submit" name="selection" value="Manage Users" />
-       		<input type="submit" name="selection" value="Log Out" />
 		</form>
 	
 	</body>
