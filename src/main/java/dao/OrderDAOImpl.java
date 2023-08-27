@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import model.Brand;
-import model.Category;
 import model.Item;
 import model.Order;
 import model.User;
@@ -206,6 +204,9 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	private void queryOrders(String query, List<Order> result) {			
+		UserDAOImpl customer = new UserDAOImpl();
+		ItemDAOImpl itemList = new ItemDAOImpl();
+		
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -214,55 +215,22 @@ public class OrderDAOImpl implements OrderDAO {
 			
 			while(resultSet.next()) {
 				int orderId = resultSet.getInt("id");
+				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
-
-				// Query for all of the data we need
-				String itemQuery = "SELECT * FROM Item " + 
-						"INNER JOIN ItemOrder ON ItemOrder.itemId = Item.itemID " +
-						"INNER JOIN Brand ON Brand.id = Item.brand " +
-						"INNER JOIN Category ON Category.id = Item.category " +
-						"INNER JOIN Orders ON Orders.id = ItemOrder.orderId " + 
-						"INNER JOIN User ON User.id = Orders.customerID  " +
-						"WHERE orderId = " + orderId + ";";
-				Statement itemStatement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-				ResultSet itemResultSet = itemStatement.executeQuery(itemQuery);
-		
-				// Get the list of items associated with the order
 				HashMap<Item, Integer> items = new HashMap<Item, Integer>(); 
-				while(itemResultSet.next()) {
-					int categoryId = itemResultSet.getInt(11);
-					String categoryName = itemResultSet.getString(12);
-					Category category = new Category();
-					category.setId(categoryId);
-					category.setName(categoryName);
-					
-					int brandId = itemResultSet.getInt(13);
-					String brandName = itemResultSet.getString(14);
-					Brand brand = new Brand();
-					brand.setId(brandId);
-					brand.setName(brandName);	
-					
-					Item item = new Item();
-					item.setItemID(itemResultSet.getString(1));
-					item.setName(itemResultSet.getString(2));
-					item.setDescription(itemResultSet.getString(3));
-					item.setCategory(category);
-					item.setBrand(brand);
-					item.setPrice(itemResultSet.getInt(6));
-					item.setQuantityStocked(itemResultSet.getInt(7));
-					items.put(item, itemResultSet.getInt(10));					
-				}
 
-				// Get the name of the customer
-				itemResultSet.first();
-				User customer = new User();
-				customer.setFirstName(itemResultSet.getString("firstName"));
-				customer.setLastName(itemResultSet.getString("lastName"));
+				// Get the list of items associated with the order
+				Statement itemStatement = connection.createStatement();
+				ResultSet itemResultSet = itemStatement.executeQuery("SELECT * FROM ItemOrder WHERE orderId = '" + orderId + "';");
+				while(itemResultSet.next()) {
+					Item item = itemList.findItemById(itemResultSet.getString("itemId"));
+					items.put(item, itemResultSet.getInt("quantity"));
+				}
 						
 				Order order = new Order();	
 				order.setId(orderId);
-				order.setCustomer(customer);
+				order.setCustomer(user);
 				order.setDateOfPurchase(date);
 				order.setDateOfPurchase(date);
 				order.setTotal(total);

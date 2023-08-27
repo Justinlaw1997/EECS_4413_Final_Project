@@ -39,7 +39,7 @@
 			         <td> $${order.getTotal()} </td>
 			         <td> ${order.getDateOfPurchase()} </td>
 			         
-			         <td><form method='get' action='/CustomerOrderServlet'>
+			         <td><form method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
 					 	<input class='cart-update' type="submit" value="Cancel" />
 					 	<input type="hidden" name="delete" value="${order.getId()}" />
 					 </form></td> 
@@ -47,7 +47,7 @@
 			 </c:forEach>
 		</table>	
 
-        <p><a href='/CatalogServlet'>Continue shopping...</a></p>
+        <p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
 	
 	</body>
 </html>

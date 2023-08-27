@@ -11,7 +11,10 @@
 ### Deployment 
 
 - Our site is deployed at the following URL: http://jil2.us-east-2.elasticbeanstalk.com/
-
+- In order to access the Admin features, click the "Admin View" box and log in with the following credentials:
+     - email: admin
+     - password: password
+	
 ### Running Locally
 
 - Download/clone the files by following the instructions above
