@@ -6,6 +6,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Order Success</title>
+		<link rel="stylesheet" href="css/cart.css">
+		<link rel="stylesheet" href="css/checkout.css">
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 <body>
 	<h2>Your order was successful!</h2>

@@ -7,6 +7,7 @@ img {
 	margin-right: auto;
 }
 
+
 .orderSelect {
 	width: 330px
 }
@@ -23,7 +24,6 @@ img {
 }
 
 #forms {
-	display: flex;
 }
 
 body{
@@ -31,14 +31,15 @@ body{
 	margin: auto;
 	width: 50%;
 	text-align: center;
-	background-color: #808A9F;
+	display: block;
+	background: linear-gradient(45deg, #49a09d, #5f2c82);
 	
 }
 
 
 /* CSS */
 .button-1 {
-  background-color: #BAD29F;
+  background-color: #2C497F;
   border-radius: 8px;
   border-style: none;
   box-sizing: border-box;
@@ -67,7 +68,7 @@ body{
 
 .button-1:hover,
 .button-1:focus {
-  background-color: #F082AC;
+  background-color: #4973C1;
 }
 
 .text-input-1{
@@ -75,4 +76,111 @@ body{
   border-radius:10px;
   border:0;
   box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+  margin: 5px;
+}
+
+
+
+
+.button-2 {
+  background-color: #2C497F;
+  border-radius: 8px;
+  border-style: none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  height: 30px;
+  line-height: 20px;
+  list-style: none;
+  margin: 0;
+  outline: none;
+  padding: 7px 12px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  transition: color 100ms;
+  vertical-align: baseline;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin: 2px;
+}
+
+.button-2:hover,
+.button-2:focus {
+  background-color: #4973C1;
+}
+
+.login_options{
+}
+
+.sort_bar{
+}
+
+#sort_bar_item{
+	display: inline;
+}
+#login_form_item{
+	display: inline;
+}
+
+html,
+body {
+	height: 100%;
+}
+}
+
+.container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #fff;
+}
+
+th {
+	text-align: left;
+}
+
+
+th {
+	background-color: #55608f;
+}
+
+
+tr:hover {
+		background-color: rgba(255,255,255,0.3);
+}
+td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
 }

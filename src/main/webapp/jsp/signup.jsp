@@ -6,6 +6,9 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta charset="UTF-8">
 <title>Welcome</title>
+	<link rel="stylesheet" href="css/cart.css">
+		<link rel="stylesheet" href="css/checkout.css">
+		<link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 	<!-- Only uses this from if this forward was sent from login servlet -->
@@ -14,25 +17,25 @@
 				<script> alert("hi") </script>
 		<%} %>
 		<h3>First Name</h3>
-		<input type='text' name='first-name'>Enter First Name</input>
+		<input class="text-input-1" type='text' name='first-name' placeholder='Enter First Name'></input>
 		<h3>Last Name</h3>
-		<input type='text' name='last-name'>Enter Last Name</input>
+		<input class="text-input-1" type='text' name='last-name' placeholder='Enter Last Name'></input>
 		<h3>Street Address</h3>
-		<input type='text' name='street-address'>Enter Street Address</input>
+		<input class="text-input-1" type='text' name='street-address' placeholder='Enter Street Address'></input>
 		<h3>Province</h3>
-		<input type='text' name='province'>Enter Province</input>
+		<input class="text-input-1" type='text' name='province' placeholder='Enter Province'></input>
 		<h3>Country</h3>
-		<input type='text' name='country'>Country</input>
+		<input class="text-input-1" type='text' name='country' placeholder='Country'></input>
 		<h3>Postal Code</h3>
-		<input type='text' name='postal-code'>Enter Postal Code</input>
+		<input class="text-input-1" type='text' name='postal-code' placeholder='Enter Postal Code'></input>
 		<h3>Phone</h3>
-		<input type='text' name='phone'>Enter Phone</input>
+		<input class="text-input-1" type='text' name='phone' placeholder='Enter Phone'></input>
 		<h3>Email</h3>
-		<input type='text' name='email'>Enter Email</input>
+		<input class="text-input-1" type='text' name='email' placeholder='Enter Email'></input>
 		<h3>Password</h3>
-		<input type='text' name='password'>Enter Password</input>
+		<input class="text-input-1" type='text' name='password' placeholder='Enter Password'></input>
 		
-		<input type='submit' name='user-action' value='signupReg'>SignUp</input>	
+		<button class='button-2' role='button' type='submit' name='user-action' value='signupReg'>Sign Up</button>	
 	</form>
 </body>
 </html>

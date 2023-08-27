@@ -6,6 +6,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Shopping Cart</title>
+		<link rel="stylesheet" href="css/cart.css">
 		<link href="css/style.css" rel="stylesheet">
 	</head>
 <body>
@@ -46,8 +47,8 @@
 		          	  			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='update' /> 
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }' /> 
-					                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityPurchased() }' />
-					                <input type='submit' value='Update' />
+					                <input class='cart-update'type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityPurchased() }' />
+					                <input class="button-cart" role="button" type='submit' value='Update' />
 				                </form>
 			                </td>
 		 
@@ -56,7 +57,7 @@
 				                <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='remove' >
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }'> 
-					                <input type='submit' value='Remove'>
+					                <input class="button-cart" role="button" type='submit' value='Remove'>
 				                </form>
 			                </td>
 			            </tr>
@@ -75,7 +76,7 @@
 	<%-- Outputs a button to checkout all the chosen items --%>
 	<c:if test="${ !sessionScope.cart.isEmpty() }">
 		<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
-			<input type='submit' value='CHECK OUT'>
+			<input class="button-1" role="button" type='submit' value='CHECK OUT'>
 		</form>
 	</c:if>
 </body>
