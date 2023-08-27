@@ -8,20 +8,8 @@ public class Brand implements Serializable {
 	
 	private int id;
 	private String name;
-	
-	// For creating a new database entry (id values are auto-incrementing)
-	public Brand(String name) {
-		super();
-		this.name = name;
-	}
-	
-	// For querying an existing brand from the database
-	public Brand(int id, String name) {
-		super();
-		this.id = id;
-		this.name = name;
-	}
-	
+
+	public Brand() {}
 	
 	public int getId() {
 		return id;

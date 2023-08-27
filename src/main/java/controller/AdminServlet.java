@@ -138,9 +138,15 @@ public class AdminServlet extends HttpServlet {
 			
 			// Check to see if a User status change has been requested
 			if (request.getParameter("status") != null) {
-				userDao.changeUserStatus(Integer.parseInt(request.getParameter("status")));
-			}	
-			
+				User loggedIn = (User) request.getSession().getAttribute("user");
+				User deleteUser = userDao.findUserById(Integer.parseInt(request.getParameter("status")));
+				if (loggedIn.getId() == deleteUser.getId()) {
+					JOptionPane.showMessageDialog(null, "Can't change status for a logged in user");
+				} else {
+					userDao.changeUserStatus(Integer.parseInt(request.getParameter("status")));
+				}
+			}
+
 			// Filter the Remaining Users
 			String filterUsers = request.getParameter("filterUsers");
 			if (filterUsers == null) {

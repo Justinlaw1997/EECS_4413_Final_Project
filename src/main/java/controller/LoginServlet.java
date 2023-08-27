@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -50,20 +52,23 @@ public class LoginServlet extends HttpServlet {
 			UserDAO dao = new UserDAOImpl();
 			
 			//split into sign in result and customer id
+			String resultString = dao.signIn(email, pass);
 			String [] result = dao.signIn(email, pass).split(" ", 2);
+
+			
 			System.out.println("Got result from LOGIN with email = " + email + ": ");
 			for(String s: result) {
 				System.out.println(s);
 			}
-			if(result[0].equals("user does not exist")) {
+			if(resultString.equals("user does not exist")) {
 				//set a user does not exist error alert to pop up on login page	
-				request.setAttribute(" n", "error");
+				request.setAttribute("no-user", "error");
 				
 				//send back to login
 				RequestDispatcher rd = request.getRequestDispatcher("/jsp/welcome.jsp");
 				rd.forward(request, response);
 				
-			}else if(result[0].equals("incorrect password")) {
+			}else if(resultString.equals("incorrect password")) {
 				//set an incorrect password alert to show up on login page	
 				request.setAttribute("incrpass", "incrpass");
 				
@@ -123,9 +128,74 @@ public class LoginServlet extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			Address address = new Address(streetAddress, province, country, postalCode, phone);
+			
+			//INPUT VALIDATION
+			String firstNameReg = "[A-Za-z]+";
+			String lastNameReg = "([A-Za-z]+\\w[A-Za-z]+)+";
+			String emailReg = ".+@.+\\.+";
+			//Digit must occur once
+			String passReg1 = "^(?=.*[0-9])";
+			//Special Character for pass
+			String passReg2 = "^(?=.*[@#$%^&-+=()])";
+			//Uppercase atleastOnce
+			String passRegCaps = "^(?=.*[A-Z])";
+			//No whitespace in pass
+			String passWS = "^(?=\\\\S+$)";
+			
+			System.out.println("Starting validation");
+			//Reg1
+	        Pattern p = Pattern.compile(passReg1);
+			Matcher m = p.matcher(password);
+			//Reg1
+	        Pattern p2 = Pattern.compile(passReg2);
+			Matcher m2 = p.matcher(password);
+			//RegCaps
+	        Pattern p3 = Pattern.compile(passRegCaps);
+			Matcher m3 = p.matcher(password);
+			//RegWS
+	        Pattern p4 = Pattern.compile(passWS);
+			Matcher m4 = p.matcher(password);
+//			if(!m.matches()) {
+//				//incorrect!!
+//				System.out.println("Digit missing");
+//				request.setAttribute("input-error", "Password" + password + "must include a digit atleast once, " + passReg1);
+//				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+//					rd.forward(request, response);
+//			}else if(!m2.matches()) {
+//				//incorrect!!
+//				request.setAttribute("input-error", "Password must include a special character atleast once");
+//				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+//					rd.forward(request, response);
+//			}else if(!m3.matches()) {
+//				//incorrect!!
+//				request.setAttribute("input-error", "Password must include a capital character atleast once");
+//				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+//					rd.forward(request, response);
+//			}else if(!m4.matches()) {
+//				//incorrect!!
+//				request.setAttribute("input-error", "Password must not include any whitespace");
+//				 RequestDispatcher rd = request.getRequestDispatcher("/jsp/signup.jsp");
+//					rd.forward(request, response);
+//			}else {
+//				
+//			}
+      Address address = new Address();
+			address.setStreetAddress(streetAddress);
+			address.setProvince(province);
+			address.setCountry(country);
+			address.setProvince(province);
+			address.setPostalCode(postalCode);
+			address.setPhone(phone);
+			
 			//isadmin is 0 for all regular users, isadmin = 1 must be changed from the admin page
-			User user = new User(firstName, lastName, address, 0, email, password);
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setAddress(address);
+			user.setIsAdmin(0);
+			user.setEmail(email);
+			user.setPassword(password);			
+      
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER
@@ -138,6 +208,7 @@ public class LoginServlet extends HttpServlet {
 	        //send user to catalog
 	        RequestDispatcher rd = request.getRequestDispatcher("/CatalogServlet");
 			rd.forward(request, response);
+
 		}
 		
 		

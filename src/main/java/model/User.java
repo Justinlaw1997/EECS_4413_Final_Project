@@ -14,28 +14,7 @@ public class User implements Serializable {
 	private String email;
 	private String password;
 
-	// For creating a new database entry (id values are auto-incrementing)
-	public User(String firstName, String lastName, Address address, int isAdmin, String email, String password) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.isAdmin = isAdmin;
-		this.email = email;
-		this.password = password;
-	}
-	
-	// For querying an existing brand from the database
-	public User(int id, String firstName, String lastName, Address address, int isAdmin, String email, String password) {
-		super();
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.address = address;
-		this.isAdmin = isAdmin;
-		this.email = email;
-		this.password = password;
-	}
+	public User() {}
 	
 	public int getId() {
 		return id;

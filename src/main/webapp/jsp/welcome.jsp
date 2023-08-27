@@ -9,8 +9,11 @@
 </head>
 <body>
 	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
-		<%if(request.getAttribute("error")=="no user"){ %>
-			<script> alert("Please Login or Register to Complete Your Purchase") </script>
+		<%if(request.getAttribute("no-user")!=null){ %>
+				<script> alert("User does not exist!") </script>
+		<%} %>
+		<%if(request.getAttribute("incrpass")!=null){ %>
+				<script> alert("Incorrect Password!") </script>
 		<%} %>
 		
 		<h3>Email</h3>
@@ -23,8 +26,6 @@
 			<input class="button-1" role="button" type='submit' name='user-action' value='signup'></input>
 			<input class="button-1" role="button" type='submit' name='user-action' value='guest'></input>
 		</div>
-
-		<input type='checkbox' name='adminPage' value='go'>Admin View</input>
 	
 	</form>
 </body>

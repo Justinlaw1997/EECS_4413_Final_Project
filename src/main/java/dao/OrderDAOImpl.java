@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.logging.Logger;
 
 import model.Item;
 import model.Order;
@@ -26,7 +25,7 @@ public class OrderDAOImpl implements OrderDAO {
 
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-	      Logger logger= Logger.getLogger(OrderDAOImpl.class.getName());
+
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -35,14 +34,12 @@ public class OrderDAOImpl implements OrderDAO {
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
-		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 		    } catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }
 		    return con;
 		}else {
@@ -56,12 +53,11 @@ public class OrderDAOImpl implements OrderDAO {
 		      String port = "3306";
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 			}catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }		      
 		}
 		return con;
@@ -207,10 +203,8 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	}
 	
-	private void queryOrders(String query, List<Order> result) {	
+	private void queryOrders(String query, List<Order> result) {
 		UserDAOImpl customer = new UserDAOImpl();
-		ItemDAOImpl itemList = new ItemDAOImpl();
-		
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -223,17 +217,30 @@ public class OrderDAOImpl implements OrderDAO {
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
 
-				// Get the list of items associated with the order
-				Statement itemStatement = connection.createStatement();
-				ResultSet itemResultSet = itemStatement.executeQuery("SELECT * FROM ItemOrder WHERE orderId = '" + orderId + "';");
-				
+				// Query for all of the data we need
+				String itemQuery = "SELECT * FROM Item " + 
+						"INNER JOIN ItemOrder ON ItemOrder.itemId = Item.itemID " +
+						"INNER JOIN Orders ON Orders.id = ItemOrder.orderId " + 
+						"WHERE orderId = " + orderId + ";";
+				Statement itemStatement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet itemResultSet = itemStatement.executeQuery(itemQuery);
+		
+				// Get the list of item names associated with the order
 				HashMap<Item, Integer> items = new HashMap<Item, Integer>(); 
 				while(itemResultSet.next()) {
-					Item item = itemList.findItemById(itemResultSet.getString("itemId"));
-					items.put(item, itemResultSet.getInt("quantity"));					
+					Item item = new Item();
+					item.setName(itemResultSet.getString(2));
+					items.put(item, itemResultSet.getInt(10));		
 				}
-						
-				Order order = new Order(orderId, user, date, total, items);				
+
+				Order order = new Order();	
+				order.setId(orderId);
+				order.setCustomer(user);
+				order.setDateOfPurchase(date);
+				order.setDateOfPurchase(date);
+				order.setTotal(total);
+				order.setItems(items);
+				
 				result.add(order);
 			}
 			

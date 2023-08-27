@@ -13,13 +13,12 @@ import java.util.List;
 import model.Brand;
 import model.Category;
 import model.Item;
-import java.util.logging.*;
 
 public class ItemDAOImpl implements ItemDAO {
 	
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-	      Logger logger= Logger.getLogger(ItemDAOImpl.class.getName());
+
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -28,14 +27,12 @@ public class ItemDAOImpl implements ItemDAO {
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
-		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 		    } catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }
 		    return con;
 		}else {
@@ -49,12 +46,11 @@ public class ItemDAOImpl implements ItemDAO {
 		      String port = "3306";
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 			}catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }		      
 		}
 		return con;
@@ -143,7 +139,9 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {			
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Category category = new Category(id, name);				
+				Category category = new Category();
+				category.setId(id);
+				category.setName(name);
 				result.add(category);
 			}
 			
@@ -170,7 +168,9 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {			
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Brand brand = new Brand(id, name);				
+				Brand brand = new Brand();
+				brand.setId(id);
+				brand.setName(name);
 				result.add(brand);
 			}
 			
@@ -210,11 +210,15 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {		
 				int categoryId = resultSet.getInt(8);
 				String categoryName = resultSet.getString(9);
-				Category category = new Category(categoryId, categoryName);
+				Category category = new Category();
+				category.setId(categoryId);
+				category.setName(categoryName);
 				
 				int brandId = resultSet.getInt(10);
 				String brandName = resultSet.getString(11);
-				Brand brand = new Brand(brandId, brandName);
+				Brand brand = new Brand();
+				brand.setId(brandId);
+				brand.setName(brandName);				
 				
 				String itemId = resultSet.getString("itemID");
 				String itemName = resultSet.getString("name");
@@ -224,7 +228,17 @@ public class ItemDAOImpl implements ItemDAO {
 				int quantityPurchased = 0;
 				String image = "images/" + itemId + ".jpg";
 
-				Item item = new Item(itemId, itemName, description, category, brand, price, quantityStocked, quantityPurchased, image);				
+				Item item = new Item();		
+				item.setItemID(itemId);
+				item.setName(itemName);
+				item.setImage(description);
+				item.setCategory(category);
+				item.setBrand(brand);
+				item.setPrice(price);
+				item.setQuantityStocked(quantityStocked);
+				item.setQuantityPurchased(quantityPurchased);
+				item.setImage(image);
+				
 				result.add(item);
 			}
 			

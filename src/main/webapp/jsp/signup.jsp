@@ -13,10 +13,11 @@
 <body>
 	<!-- Only uses this from if this forward was sent from login servlet -->
 	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
-		<%if(request.getAttribute("error")!=null){ %>
-				<script> alert("hi") </script>
+		<%if(request.getAttribute("input-error")!=null){ %>
+			<%=request.getAttribute("input-error")%>
 		<%} %>
 		<h3>First Name</h3>
+
 		<input class="text-input-1" type='text' name='first-name' placeholder='Enter First Name'></input>
 		<h3>Last Name</h3>
 		<input class="text-input-1" type='text' name='last-name' placeholder='Enter Last Name'></input>
@@ -36,6 +37,7 @@
 		<input class="text-input-1" type='text' name='password' placeholder='Enter Password'></input>
 		
 		<button class='button-2' role='button' type='submit' name='user-action' value='signupReg'>Sign Up</button>	
+
 	</form>
 </body>
 </html>
