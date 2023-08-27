@@ -219,7 +219,7 @@ public class ItemDAOImpl implements ItemDAO {
 				Brand brand = new Brand();
 				brand.setId(brandId);
 				brand.setName(brandName);				
-				
+
 				String itemId = resultSet.getString("itemID");
 				String itemName = resultSet.getString("name");
 				String description = resultSet.getString("description");
@@ -231,6 +231,7 @@ public class ItemDAOImpl implements ItemDAO {
 				Item item = new Item();		
 				item.setItemID(itemId);
 				item.setName(itemName);
+				item.setDescription(description);
 				item.setImage(description);
 				item.setCategory(category);
 				item.setBrand(brand);
@@ -238,7 +239,7 @@ public class ItemDAOImpl implements ItemDAO {
 				item.setQuantityStocked(quantityStocked);
 				item.setQuantityPurchased(quantityPurchased);
 				item.setImage(image);
-				
+
 				result.add(item);
 			}
 			

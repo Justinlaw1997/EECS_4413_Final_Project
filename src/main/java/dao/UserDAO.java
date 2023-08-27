@@ -16,7 +16,7 @@ public interface UserDAO {
 		
 	public String signIn(String email, String password);
 	
-	public void registerUser(User user);
+	public int registerUser(User user);
 	
 	public void removeUser(User user);
 	
