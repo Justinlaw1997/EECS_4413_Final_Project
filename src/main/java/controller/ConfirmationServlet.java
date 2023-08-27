@@ -67,7 +67,11 @@ public class ConfirmationServlet extends HttpServlet {
 				total += item.getPrice() * item.getQuantityPurchased();
 			}
 			
-			Order order = new Order(user, date, total, lineItems);		
+			Order order = new Order();	
+			order.setCustomer(user);
+			order.setDateOfPurchase(date);
+			order.setTotal(total);
+			order.setItems(lineItems);
 			
 			// Save the new order to the database
 			OrderDAO dao = new OrderDAOImpl();

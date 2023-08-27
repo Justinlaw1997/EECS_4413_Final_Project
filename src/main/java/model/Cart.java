@@ -26,8 +26,16 @@ public class Cart {
       }
 	  
 	  if (itemFound == false) {
-		  Item newItem = new Item(itemID, name, description, category, brand, price, quantityStocked, quantityPurchased, image);
+		  Item newItem = new Item();
+		  newItem.setItemID(itemID);
+		  newItem.setName(name);
+		  newItem.setDescription(description);
+		  newItem.setCategory(category);
+		  newItem.setBrand(brand);
+		  newItem.setPrice(price);
+		  newItem.setQuantityStocked(quantityStocked);
 		  newItem.setQuantityPurchased(quantityPurchased);
+		  newItem.setImage(image);
 		  cart.add(newItem);
 	  }
    }

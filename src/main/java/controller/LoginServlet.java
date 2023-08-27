@@ -123,9 +123,23 @@ public class LoginServlet extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
-			Address address = new Address(streetAddress, province, country, postalCode, phone);
+			Address address = new Address();
+			address.setStreetAddress(streetAddress);
+			address.setProvince(province);
+			address.setCountry(country);
+			address.setProvince(province);
+			address.setPostalCode(postalCode);
+			address.setPhone(phone);
+			
 			//isadmin is 0 for all regular users, isadmin = 1 must be changed from the admin page
-			User user = new User(firstName, lastName, address, 0, email, password);
+			User user = new User();
+			user.setFirstName(firstName);
+			user.setLastName(lastName);
+			user.setAddress(address);
+			user.setIsAdmin(0);
+			user.setEmail(email);
+			user.setPassword(password);			
+			
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER

@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
 
+import model.Brand;
+import model.Category;
 import model.Item;
 import model.Order;
 import model.User;
@@ -207,10 +209,7 @@ public class OrderDAOImpl implements OrderDAO {
 		}
 	}
 	
-	private void queryOrders(String query, List<Order> result) {	
-		UserDAOImpl customer = new UserDAOImpl();
-		ItemDAOImpl itemList = new ItemDAOImpl();
-		
+	private void queryOrders(String query, List<Order> result) {			
 		Connection connection = null;
 		try {
 			connection = getConnection();
@@ -219,21 +218,40 @@ public class OrderDAOImpl implements OrderDAO {
 			
 			while(resultSet.next()) {
 				int orderId = resultSet.getInt("id");
-				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
 
-				// Get the list of items associated with the order
-				Statement itemStatement = connection.createStatement();
-				ResultSet itemResultSet = itemStatement.executeQuery("SELECT * FROM ItemOrder WHERE orderId = '" + orderId + "';");
-				
+				// Query for all of the data we need
+				String itemQuery = "SELECT * FROM Item " + 
+						"INNER JOIN ItemOrder ON ItemOrder.itemId = Item.itemID " +
+						"INNER JOIN Orders ON Orders.id = ItemOrder.orderId " + 
+						"INNER JOIN User ON User.id = Orders.customerID  " +
+						"WHERE orderId = " + orderId + ";";
+				Statement itemStatement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+				ResultSet itemResultSet = itemStatement.executeQuery(itemQuery);
+		
+				// Get the list of item names associated with the order
 				HashMap<Item, Integer> items = new HashMap<Item, Integer>(); 
 				while(itemResultSet.next()) {
-					Item item = itemList.findItemById(itemResultSet.getString("itemId"));
+					Item item = new Item();
+					item.setName(itemResultSet.getString(2));
 					items.put(item, itemResultSet.getInt("quantity"));					
 				}
+
+				// Get the name of the customer
+				itemResultSet.first();
+				User customer = new User();
+				customer.setFirstName(itemResultSet.getString("firstName"));
+				customer.setLastName(itemResultSet.getString("lastName"));
 						
-				Order order = new Order(orderId, user, date, total, items);				
+				Order order = new Order();	
+				order.setId(orderId);
+				order.setCustomer(customer);
+				order.setDateOfPurchase(date);
+				order.setDateOfPurchase(date);
+				order.setTotal(total);
+				order.setItems(items);
+				
 				result.add(order);
 			}
 			

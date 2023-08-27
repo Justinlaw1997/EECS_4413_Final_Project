@@ -250,7 +250,13 @@ public class UserDAOImpl implements UserDAO {
 				String country = resultSet.getString("country");
 				String postalCode = resultSet.getString("postalCode");
 				String phone = resultSet.getString("phone");
-				Address address = new Address(id, streetAddress, province, country, postalCode, phone);
+				Address address = new Address();
+				address.setId(id);
+				address.setStreetAddress(streetAddress);
+				address.setProvince(province);
+				address.setCountry(country);
+				address.setPostalCode(postalCode);
+				address.setPhone(phone);
 				
 				int userId = resultSet.getInt("id");
 				String firstName = resultSet.getString("firstName");
@@ -259,7 +265,15 @@ public class UserDAOImpl implements UserDAO {
 				String email = resultSet.getString("email");
 				String password = resultSet.getString("password");
 				
-				User user = new User(userId, firstName, lastName, address, isAdmin, email, password);				
+				User user = new User();				
+				user.setId(userId);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setAddress(address);
+				user.setIsAdmin(isAdmin);
+				user.setEmail(email);
+				user.setPassword(password);
+				
 				result.add(user);
 			}
 			
