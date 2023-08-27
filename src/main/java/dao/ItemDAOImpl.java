@@ -28,14 +28,12 @@ public class ItemDAOImpl implements ItemDAO {
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
-		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 		    } catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }
 		    return con;
 		}else {
@@ -49,12 +47,11 @@ public class ItemDAOImpl implements ItemDAO {
 		      String port = "3306";
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 			}catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }		      
 		}
 		return con;
