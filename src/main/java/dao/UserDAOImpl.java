@@ -139,7 +139,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public void registerUser(User user) {	
+	public int registerUser(User user) {	
+		int userId = 0;
 		String firstName = user.getFirstName();
 		String lastName = user.getLastName();
 		int isAdmin = user.getIsAdmin();
@@ -172,7 +173,7 @@ public class UserDAOImpl implements UserDAO {
 			}
 
 			String userSQL = "INSERT into User (firstName, lastName, addressID, isAdmin, email, password) VALUES (?, ?, ?, ?, ?, ?);";
-			PreparedStatement userStatement = connection.prepareStatement(userSQL);
+			PreparedStatement userStatement = connection.prepareStatement(userSQL, Statement.RETURN_GENERATED_KEYS);
 			userStatement.setString(1, firstName);
 			userStatement.setString(2, lastName);
 			userStatement.setInt(3, addressId);
@@ -181,11 +182,18 @@ public class UserDAOImpl implements UserDAO {
 			userStatement.setString(6, password);
 			userStatement.execute();
 			
+			ResultSet userKeys = userStatement.getGeneratedKeys();
+			if (userKeys.next()) {
+				userId = userKeys.getInt(1);
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			closeConnection(connection);
 		}
+		
+		return userId;
 	}
 	
 	@Override

@@ -179,7 +179,7 @@ public class LoginServlet extends HttpServlet {
 //			}else {
 //				
 //			}
-      Address address = new Address();
+			Address address = new Address();
 			address.setStreetAddress(streetAddress);
 			address.setProvince(province);
 			address.setCountry(country);
@@ -199,7 +199,8 @@ public class LoginServlet extends HttpServlet {
 			UserDAO dao = new UserDAOImpl();
 			
 			//REGISTER USER
-			dao.registerUser(user);
+			int id = dao.registerUser(user);
+			user.setId(id);
 			
 			//store the user in the session (USER IS LOGGED IN)
 	        HttpSession session=request.getSession();  
