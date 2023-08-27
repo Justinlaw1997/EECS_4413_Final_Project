@@ -1,0 +1,172 @@
+CREATE TABLE `Address` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `streetAddress` varchar(45) NOT NULL,
+  `province` varchar(45) NOT NULL,
+  `country` varchar(45) NOT NULL,
+  `postalCode` varchar(45) NOT NULL,
+  `phone` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=11;
+
+CREATE TABLE `Brand` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=11;
+
+CREATE TABLE `Category` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=6;
+
+CREATE TABLE `Item` (
+  `itemID` varchar(45) NOT NULL,
+  `name` varchar(55) DEFAULT NULL,
+  `description` varchar(100) DEFAULT NULL,
+  `category` varchar(45) NOT NULL,
+  `brand` varchar(45) NOT NULL,
+  `price` int NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`itemID`)
+);
+
+CREATE TABLE `ItemOrder` (
+  `itemId` varchar(45) DEFAULT NULL,
+  `orderId` varchar(45) NOT NULL,
+  `quantity` int DEFAULT NULL
+);
+
+CREATE TABLE `Orders` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `customerID` int NOT NULL,
+  `dateOfPurchase` varchar(45) NOT NULL,
+  `total` int NOT NULL,
+  PRIMARY KEY (`id`)
+) AUTO_INCREMENT=16;
+
+CREATE TABLE `User` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `firstName` varchar(45) NOT NULL,
+  `lastName` varchar(45) NOT NULL,
+  `addressID` int NOT NULL,
+  `isAdmin` int NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
+) AUTO_INCREMENT=11;
+
+INSERT INTO Address VALUES
+(1,"123 Cool St","ON","Canada","A1B 2C3","123-456-7890"),
+(2,"303 Pikachu Ln","BC","Canada","B2C 3D4","987-654-3210"),
+(3,"89 Pickle Blvd","NY","United States","E6H 4T8","555-897-1133"),
+(4,"8 Dingleberry Dr","AZ","United States","T7H 3D5","745-965-8542"),
+(5,"72 Guten Tag St","BE","Germany","E6T G5R","456-852-6542"),
+(6,"567 Yonge St","ON","Canada","K1E 6T5","647-123-4567"),
+(7,"945 Avenue Rd","ON","Canada","M1C 6K5","416-123-8569"),
+(8,"189 Keele St","ON","Canada","K3C 9T5","416-123-9568"),
+(9,"888 Ate St","SA","Australia","G6U E4W","856-624-5893"),
+(10,"24 North Pole St","NT","Canada","H0H 0H0","123-456-1225");
+
+INSERT INTO User VALUES
+(1,"Clark","Kent",1,1,"superman@gmail.com","nokryptonite"),
+(2,"Tony","Stark",2,0,"tonystark@yahoo.ca","iamironman"),
+(3,"Fred","Flintstone",3,0,"yabbadabbadoo@gmail.com","WILMAAA"),
+(4,"Bugs","Bunny",4,1,"bugs@gmail.com","whatsupdoc"),
+(5,"Betty","Boop",5,0,"bettyboop@gmail.com","boopoopadoop"),
+(6,"Donkey","Kong",6,0,"dk@yahoo.ca","bananas4ever"),
+(7,"Leia","Organa",7,0,"princessleia@hotmail.com","nerfherder"),
+(8,"Luke","Skywalker",8,0,"skywalker@hotmail.com","forcebewithyou"),
+(9,"Frodo","Baggins",9,0,"onering@outlook.com","hobbits"),
+(10,"Santa","Claus",10,0,"merryxmas@yahoo.ca","hohoho");
+
+INSERT INTO Brand VALUES
+(1,"Bloomsbury"),
+(2,"Houghton Mifflin"),
+(3,"Rockstar Games"),
+(4,"Square Enix"),
+(5,"Nintendo"),
+(6,"Dell"),
+(7,"Apple"),
+(8,"Hasbro"),
+(9,"Kosmos"),
+(10,"Sony");
+
+INSERT INTO Category VALUES
+(1,"book"),
+(2,"video game"),
+(3,"computer"),
+(4,"board game"),
+(5,"accessory");
+
+INSERT INTO Item VALUES
+("b001","Harry Potter and the Chamber of Secrets","The Chamber of Secrets has been opened. Enemies of the heir... beware!","1","1",10,66),
+("b002","Harry Potter and the Prisoner of Azkaban","Something wicked this way comes.","1","1",10,85),
+("b003","The Lord of the Rings: The Fellowship of the Ring","Fate has chosen him. A fellowship will protect him. Evil will hunt them.","1","2",15,119),
+("b004","The Lord of the Rings: The Two Towers","The fellowship is broken. The power of darkness grows.","1","2",15,142),
+("b005","The Lord of the Rings: The Return of the King","There can be no triumph without loss. No victory without suffering. No freedom without sacrifice.","1","2",15,140),
+("c001","Grand Theft Auto V","Experience the high life.","2","3",60,99),
+("c002","Red Dead Redemption 2","If we have to fight, we fight. If we have to run, we'll run. If we must die, we'll die.","2","3",60,96),
+("c003","Final Fantasy XVI","The legacy of the crystals has shaped our history for long enough.","2","4",80,99),
+("c004","The Legend of Zelda: Tears of the Kingdom ","It's dangerous to go alone! Take this!","2","5",80,80),
+("c005","Pokemon Scarlet","Gotta catch 'em all!","2","5",70,120),
+("d001","Laptop","A laptop for personal use","3","6",1500,100),
+("d002","iPad","A portable device for personal use","3","7",500,100),
+("d003","MacBook Pro","An Apple laptop for personal use","3","7",2000,79),
+("e001","Monopoly","The fast-dealing property trading game","4","8",25,62),
+("e002","Trivial Pursuit","Test your trivia IQ","4","8",25,50),
+("e003","Clue","Who killed Mr. Boddy, where, and with what?","4","8",20,195),
+("e004","Catan","Trade, build, settle","4","9",40,50),
+("e005","Pokemon Master Trainer","Become the champion as you catch, collect and battle Pokemon on your journey","4","5",40,6),
+("f001","Headphones","Device to listen to music and other audio","5","10",60,86),
+("f002","Keyboard","Input device for your computer or laptop","5","6",30,69);
+
+INSERT INTO Orders VALUES
+(1,2,"Mon Dec 26 12:26:00 EDT 2022",20),
+(2,3,"Mon Feb 06 02:06:00 EDT 2023",70),
+(3,3,"Sat May 06 05:06:00 EDT 2023",2000),
+(4,5,"Thu May 11 05:11:00 EDT 2023",110),
+(5,2,"Sun Jun 04 06:04:00 EDT 2023",1560),
+(6,6,"Sun Jun 04 12:16:00 EDT 2023",60),
+(7,3,"Thu Jun 15 15:06:00 EDT 2023",1500),
+(8,7,"Mon Jun 26 06:36:00 EDT 2023",45),
+(9,8,"Mon Jul 03 07:16:00 EDT 2023",40),
+(10,5,"Mon Jul 10 12:10:00 EDT 2023",120),
+(11,2,"Thu Jul 20 17:45:00 EDT 2023",2000),
+(12,9,"Tue Aug 01 08:01:00 EDT 2023",2090),
+(13,10,"Wed Aug 02 20:56:00 EDT 2023",105),
+(14,2,"Sat Aug 05 11:11:00 EDT 2023",60),
+(15,3,"Sat Aug 05 13:45:00 EDT 2023",20);
+
+INSERT INTO ItemOrder VALUES
+("b001","1",1),
+("b002","1",1),
+("e001","2",1),
+("e002","2",1),
+("e003","2",1),
+("d003","3",1),
+("c005","4",1),
+("e005","4",1),
+("d001","5",1),
+("f001","5",1),
+("f001","6",1),
+("d001","7",1),
+("b003","8",1),
+("b004","8",1),
+("b005","8",1),
+("e005","9",1),
+("c001","10",1),
+("c002","10",1),
+("d003","11",1),
+("d003","12",1),
+("f001","12",1),
+("f002","12",1),
+("b003","13",1),
+("b004","13",1),
+("b005","13",1),
+("f001","13",1),
+("e004","14",1),
+("e003","14",1),
+("b001","15",1),
+("b002","15",1);
