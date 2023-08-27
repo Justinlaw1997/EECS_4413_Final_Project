@@ -25,5 +25,7 @@ public interface ItemDAO {
 	public List<Category> findAllCategories();
 
 	public List<Brand> findAllBrands();
+	
+	public void updateQuantity(String itemID, int quantity);
 
 }
