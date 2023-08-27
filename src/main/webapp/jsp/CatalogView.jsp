@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="css/cart.css">
 <title>Item Catalog</title>
 <link href="css/style.css" rel="stylesheet">
 </head>
@@ -11,41 +12,48 @@
 	<h2> Item Catalog</h2>
 	
 		<%-- Output conditional options depending if User or Guest --%>
-		<div id="forms">
-			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
-				<input type="submit" value="Go to Cart" />
-				<input type='hidden' name='todo' value='view' />
+		<div class="login_options" id="forms">
+			<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
+				<input class="button-1" role="button" type="submit" value="Go to Cart" />
+				<input class="button-1" role="button" type='hidden' name='todo' value='view' />
 			</form>
 			<c:choose>
 			
 				<%-- Display 'View Orders' and 'Log Out' if User --%>
 				<c:when test="${sessionScope.user != null}">
-					<form method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
-						<input type="submit" value="View Orders" />
+					<form id="login_form_item"method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
+						<input  class="button-1" role="button" type="submit" value="View Orders" />
 					</form>
-					<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
-						<input type="submit" value="Log Out" />
+					<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
+						<input   class="button-1" role="button" type="submit" value="Log Out" />
 					</form>
 				</c:when>
 				
 				<%-- Display 'Log In' if Guest --%>
 				<c:otherwise>
-					<form method='get' action='/EECS4413FinalProjectJLI/jsp/welcome.jsp'>
-						<input type="submit" value='Log In' />
+					<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/jsp/welcome.jsp'>
+						<input class="button-1" role="button" type="submit" value='Log In' />
 					</form>
 				</c:otherwise>
 				
 			</c:choose>
 		</div>
 		
+		
 		<%-- Output sort by buttons --%>
-		<p>Sort by: </p>
-		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
-       		<input type="submit" name="sort" value="All" />
-			<input type="submit" name="sort" value="Prices: Ascending" />
-			<input type="submit" name="sort" value="Prices: Descending" />
-			<input type="submit" name="sort" value="Names: Alphabetically" />
-		</form>
+		<div class="sort_bar">
+			<div id="sort_bar_item">
+				<p>Sort by: </p>
+			</div>
+			<div id="sort_bar_item">
+			<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
+	       		<input class="button-2" role="button" type="submit" name="sort" value="All" />
+				<input class="button-2" role="button" type="submit" name="sort" value="Prices: Ascending" />
+				<input class="button-2" role="button" type="submit" name="sort" value="Prices: Descending" />
+				<input class="button-2" role="button" type="submit" name="sort" value="Names: Alphabetically" />
+			</form>
+			</div>	
+		</div>
 
 		<%-- Output categories drowndown --%>
 		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
@@ -56,7 +64,7 @@
    							<option value="${category.getName()}">${category.getName()}</option>
 						</c:forEach>
 	     			</select>
-   					<input type="submit" name="sort" value="Submit: Category" />
+   					<input  class="button-2" role="button" type="submit" name="sort" value="Submit: Category" />
 		</form>
 		
 		<%-- Output brands drowndown --%>
@@ -68,7 +76,7 @@
    							<option value="${brand.getName()}">${brand.getName()}</option>
 						</c:forEach>
 	     			</select>
-   					<input type="submit" name="sort" value="Submit: Brand" />
+   					<input  class="button-2" role="button" type="submit" name="sort" value="Submit: Brand" />
 		</form>
 
 
@@ -94,13 +102,13 @@
 					 <td> ${item.getCategory().getName()}</td>
 					 <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>
-			         <td><input type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
-			         <td><a href='/EECS4413FinalProjectJLI/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
+			         <td><input class='cart-update' type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
+			         <td><a class='link-button' href='/EECS4413FinalProjectJLI/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
 				 </tr>
 				 </c:forEach>
 		
 		        <tr>
-		       		<td><input type="submit" value="Order" /></td>
+		       		<td><input class="button-1" role="button" type="submit" value="Order" /></td>
     		    	<td><input type='hidden' name='todo' value='add' /></td>
 		        </tr>
 	

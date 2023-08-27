@@ -7,6 +7,9 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Order Summary</title>
+			<link rel="stylesheet" href="css/cart.css">
+		<link rel="stylesheet" href="css/checkout.css">
+		<link href="css/style.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -37,7 +40,7 @@
 			         <td> ${order.getDateOfPurchase()} </td>
 			         
 			         <td><form method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
-					 	<input type="submit" value="Cancel" />
+					 	<input class='cart-update' type="submit" value="Cancel" />
 					 	<input type="hidden" name="delete" value="${order.getId()}" />
 					 </form></td> 
 				 </tr>
