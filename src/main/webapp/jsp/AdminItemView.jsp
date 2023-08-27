@@ -14,10 +14,10 @@
 		<h2>Manage Items</h2>
 	 
         <!-- Switch Views or Log Out -->
-        <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+        <form method='get' action='/LogOutServlet'>	
        		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
        		<input type="submit" class="button-1" name="selection" value="Manage Orders" />
        		<input type="submit" class="button-1" name="selection" value="Manage Users" />
        	</form><br>
@@ -44,7 +44,7 @@
 		         <td><p> ${item.getBrand().getName()} </p></td>
 		         <td><p> $ ${item.getPrice()} </p></td>
 		         
-   	  			<td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+   	  			<td><form method='get' action='/AdminServlet'>
    	  			    <input type="hidden" name="selection" value="Manage Items" /> 
 	                <input type='hidden' name='update' value='${ item.getItemID() }' /> 
 	                <input type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityStocked() }' />

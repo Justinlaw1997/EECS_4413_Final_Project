@@ -12,7 +12,7 @@
 </head>
 <body>
 	<!-- Only uses this from if this forward was sent from login servlet -->
-	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
+	<form method='get' action='/LoginServlet'>
 		<%if(request.getAttribute("input-error")!=null){ %>
 			<%=request.getAttribute("input-error")%>
 		<%} %>

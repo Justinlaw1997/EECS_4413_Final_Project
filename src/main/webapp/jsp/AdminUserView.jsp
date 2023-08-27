@@ -14,17 +14,17 @@
 		<h2>Manage Users</h2>
 	 
         <!-- Switch Views or Log Out -->
-        <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+        <form method='get' action='/LogOutServlet'>	
        		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
        		<input type="submit" class="button-1" name="selection" value="Manage Items" />
        		<input type="submit" class="button-1" name="selection" value="Manage Orders" />
        	</form><br>
 		
 		<!-- Filtering options -->
 		<br> Filter Users:<br>
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
        		<input type="submit" class="button-1" name="filterUsers" value="View All" />
        		<input type="submit" class="button-1" name="filterUsers" value="View Customers" />
        		<input type="submit" class="button-1" name="filterUsers" value="View Admins" />
@@ -73,13 +73,13 @@
 					 	</c:otherwise>
 					 </c:choose>
 					 
-					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+					 <td><form method='get' action='/AdminServlet'>
 					 	<input type="submit" class="button-1" value="Change" />
 					 	<input type="hidden" name="selection" value="Manage Users" />
 					 	<input type="hidden" name="status" value="${user.getId()}" />
 					 </form></td>
 					 
-					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+					 <td><form method='get' action='/AdminServlet'>
 					 	<input type="submit" class="button-1" value="Delete" />
 					 	<input type="hidden" name="selection" value="Manage Users" />
 					 	<input type="hidden" name="delete" value="${user.getId()}" />

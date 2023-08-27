@@ -15,7 +15,7 @@
 <h2>Checkout</h2>	
 
 	<hr>
-	<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
+	<form method='get' action='/LogOutServlet'>
 		<input class='button-2' role='button' type="submit" name="selection" value="Log Out" />
 	</form>
 	<h4>Welcome Back, ${user.getFirstName()} ${user.getLastName()}</h4>
@@ -32,7 +32,7 @@
 	<br>
 	
 	<%-- Form to grab credit card information --%>
-	<form method='get' action='/EECS4413FinalProjectJLI/ConfirmationServlet'>
+	<form method='get' action='/ConfirmationServlet'>
 		<label for="creditNumber">Credit Card Number</label>
 		<input class="text-input-1" type='text' name='creditNumber' value='' /><br>
 		

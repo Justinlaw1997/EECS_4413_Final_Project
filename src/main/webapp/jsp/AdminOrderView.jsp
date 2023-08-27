@@ -14,10 +14,10 @@
 		<h2>Manage Orders</h2>
 	 
 	    <!-- Switch Views or Log Out -->
-	    <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
+	    <form method='get' action='/LogOutServlet'>	
        		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
        		<input type="submit" class="button-1" name="selection" value="Manage Items" />
        		<input type="submit" class="button-1" name="selection" value="Manage Users" />
        	</form><br>
@@ -25,7 +25,7 @@
 		<br> Filter Orders:<br>
 		
 		<!-- Filter by Customer Dropdown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
    			<select class="orderSelect" name="customer" id="customer">
 				<c:forEach items="${requestScope.users}" var="customer">
 					<option value="${customer.getId()}">${customer.getFirstName()} ${customer.getLastName()}</option>
@@ -36,7 +36,7 @@
 		</form>
 		
 		<!-- Filter by Item Dropdown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
    			<select class="orderSelect" name="item" id="item">
 				<c:forEach items="${requestScope.items}" var="item">
 					<option value="${item.getItemID()}">${item.getName()}</option>
@@ -47,7 +47,7 @@
 		</form>
 		
 		<!-- Filter by Brand Dropdown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
    			<select class="orderSelect" name="brand" id="brand">
 				<c:forEach items="${requestScope.brands}" var="brand">
 					<option value="${brand.getName()}">${brand.getName()}</option>
@@ -58,7 +58,7 @@
 		</form>
 		
 		<!-- Filter by Category Dropdown -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
    			<select class="orderSelect" name="category" id="category">
 				<c:forEach items="${requestScope.categories}" var="category">
 					<option value="${category.getName()}">${category.getName()}</option>
@@ -69,14 +69,14 @@
 		</form>
 				
 		<!-- Filter by Date Input -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
    			<input id="orderSelect" name="date" id="date">
 			<input type="submit" class="button-1" name="filterOrders" value="Filter by Date" />
 			<input type="hidden" name="selection" value="Manage Orders" />
 		</form>
 		
 		<!-- Clear Filters -->
-		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+		<form method='get' action='/AdminServlet'>
        		<input type="submit" class="button-1" name="filterOrders" value="Clear Filters" />
        		<input type="hidden" name="selection" value="Manage Orders" />
 		</form><br>
@@ -112,7 +112,7 @@
 			         <td><p> $${order.getTotal()} </p></td>
 			         <td><p> ${order.getDateOfPurchase()} </p></td>
 			         
-			         <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
+			         <td><form method='get' action='/AdminServlet'>
 					 	<input type="submit" class="button-1" value="Delete" />
 					 	<input type="hidden" name="selection" value="Manage Orders" />
 					 	<input type="hidden" name="delete" value="${order.getId()}" />
