@@ -9,11 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.naming.*;
-
-
-import org.apache.catalina.Context;
-import org.apache.tomcat.jdbc.pool.DataSource;
 
 import model.Brand;
 import model.Category;

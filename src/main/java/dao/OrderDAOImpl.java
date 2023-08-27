@@ -133,30 +133,36 @@ public class OrderDAOImpl implements OrderDAO {
 	@Override
 	public List<Order> findAllOrdersByDate(String date) {
 		List<Order> result = new ArrayList<Order>();
-		String query = "SELECT * FROM Orders WHERE dateOfPurchase = \"" + date + "\";";
+		String query = "SELECT * FROM Orders WHERE dateOfPurchase LIKE '%" + date + "%';";
 		queryOrders(query, result);
 		return result;
 	}
 	
 	@Override
-	public void createOrder(Order order) {
+	public int createOrder(Order order) {
+		int orderId = 0;
 		Connection connection = null;
 		try {
 			connection = getConnection();
 			
-			String orderSQL = "INSERT into Orders VALUES (?, ?, ?, ?)";
-			PreparedStatement orderStatement = connection.prepareStatement(orderSQL);
-			orderStatement.setInt(1, order.getId());
-			orderStatement.setInt(2, order.getCustomer().getId());
-			orderStatement.setString(3, order.getDateOfPurchase());
-			orderStatement.setInt(4, order.getTotal());
+			String orderSQL = "INSERT into Orders (customerID, dateOfPurchase, total) VALUES (?, ?, ?)";
+			PreparedStatement orderStatement = connection.prepareStatement(orderSQL, Statement.RETURN_GENERATED_KEYS);
+			System.out.println(order.getCustomer().getId());
+			orderStatement.setInt(1, order.getCustomer().getId());
+			orderStatement.setString(2, order.getDateOfPurchase());
+			orderStatement.setInt(3, order.getTotal());
 			orderStatement.execute();
 			
+			ResultSet orderKeys = orderStatement.getGeneratedKeys();
+			if (orderKeys.next()) {
+				orderId = orderKeys.getInt(1);
+			}
+
 			for(Entry<Item, Integer> lineItem: order.getItems().entrySet()) {
 				String itemsSQL = "INSERT into ItemOrder VALUES (?, ?, ?)";
 				PreparedStatement itemStatement = connection.prepareStatement(itemsSQL);
 				itemStatement.setString(1, lineItem.getKey().getItemID());
-				itemStatement.setInt(2, order.getId());
+				itemStatement.setInt(2, orderId);
 				itemStatement.setInt(3, lineItem.getValue());
 				itemStatement.execute();
 				
@@ -172,6 +178,8 @@ public class OrderDAOImpl implements OrderDAO {
 		} finally {
 			closeConnection(connection);
 		}
+		
+		return orderId;
 	}
 	
 	@Override
@@ -214,7 +222,6 @@ public class OrderDAOImpl implements OrderDAO {
 				User user = customer.findUserById(resultSet.getInt("customerID"));
 				String date = resultSet.getString("dateOfPurchase");
 				int total = resultSet.getInt("total");
-				//List<Item> items = new ArrayList<Item>();
 
 				// Get the list of items associated with the order
 				Statement itemStatement = connection.createStatement();

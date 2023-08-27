@@ -13,6 +13,17 @@ public class Address implements Serializable {
 	private String postalCode;
 	private String phone;
 	
+	// For creating a new database entry (id values are auto-incrementing)
+	public Address(String streetAddress, String province, String country, String postalCode, String phone) {
+		super();
+		this.streetAddress = streetAddress;
+		this.province = province;
+		this.country = country;
+		this.postalCode = postalCode;
+		this.phone = phone;
+	}
+	
+	// For querying an existing brand from the database
 	public Address(int id, String streetAddress, String province, String country, String postalCode, String phone) {
 		super();
 		this.id = id;
