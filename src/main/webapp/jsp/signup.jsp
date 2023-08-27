@@ -31,7 +31,7 @@
 		<h3>Password</h3>
 		<input type='password' name='password'>Enter Password
 		
-		<input type='submit' name='user-action' value='signupReg'>SignUp>	
+		<input type='submit' name='user-action' value='signupReg'>SignUp	
 	</form>
 </body>
 </html>
