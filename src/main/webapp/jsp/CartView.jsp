@@ -44,7 +44,7 @@
 	          	  
 	          	  			<td>
 	          	  				<%-- Updates the quantity of the chosen item --%>
-		          	  			<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
+		          	  			<form method='get' action='/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='update' /> 
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }' /> 
 					                <input class='cart-update'type='text' size='3' name='qty${ item.getItemID() }' value='${ item.getQuantityPurchased() }' />
@@ -54,7 +54,7 @@
 		 
 			                <td>
 			                	<%-- Removes the chosen item --%>
-				                <form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
+				                <form method='get' action='/CartServlet'>
 					                <input type='hidden' size='3' name='todo' value='remove' >
 					                <input type='hidden' size='3' name='id' value='${ item.getItemID() }'> 
 					                <input class="button-cart" role="button" type='submit' value='Remove'>
@@ -71,11 +71,11 @@
 	</c:choose>
 	
 	<%-- Button to return to the catalog page --%>
-	<p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
+	<p><a href='/CatalogServlet'>Continue shopping...</a></p>
 	
 	<%-- Outputs a button to checkout all the chosen items --%>
 	<c:if test="${ !sessionScope.cart.isEmpty() }">
-		<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
+		<form method='get' action='/CheckoutServlet'>
 			<input class="button-1" role="button" type='submit' value='CHECK OUT'>
 		</form>
 	</c:if>

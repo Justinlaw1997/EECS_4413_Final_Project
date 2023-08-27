@@ -9,6 +9,6 @@
 <body>
 	<h3>Please Select a Product!</h3>
 	
-	<p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
+	<p><a href='/CatalogServlet'>Continue shopping...</a></p>
 </body>
 </html>

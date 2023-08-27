@@ -9,7 +9,7 @@
 <title>Welcome</title>
 </head>
 <body>
-	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
+	<form method='get' action='/LoginServlet'>
 		<%if(request.getAttribute("no-user")!=null){ %>
 				<script> alert("User does not exist!") </script>
 		<%} %>
