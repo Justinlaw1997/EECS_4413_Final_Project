@@ -132,7 +132,7 @@ html,
 body {
 	height: 100%;
 }
-}
+
 
 .container {
 	position: absolute;
@@ -183,4 +183,9 @@ td {
 			}
 		}
 	}
+#big-image{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 400px;
 }

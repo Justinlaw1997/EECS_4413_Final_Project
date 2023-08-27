@@ -13,7 +13,7 @@
 	<body>
 		
 		 <h1>${item.getName()}</h1>
-		 <img src="${item.getImage()}" alt="${item.getName()}" id="singleImage">
+		 <img id="big-image" src="${item.getImage()}" alt="${item.getName()}" id="singleImage">
 		 <h3>${item.getDescription()}</h3>
 		 
          <p><b>Price:</b> $${item.getPrice()}</p> 
