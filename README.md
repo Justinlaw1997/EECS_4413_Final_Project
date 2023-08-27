@@ -16,8 +16,12 @@
 
 - Download/clone the files by following the instructions above
 - Open with Eclipse and configure the following:
-  - In ```Properties -> Project Facets```, Java should be set to Java 17 and Dynamic Web Module should be set to 6.0
-  - In ```Properties -> Java Build Path```, JRE System Library should be JavaSE-17 and Server Runtime should be Tomcatv10.1
+  - In ```Properties -> Project Facets```
+    - Java should be set to Java 17
+    - Dynamic Web Module should be set to 6.0
+  - In ```Properties -> Java Build Path```
+    - JRE System Library should be JavaSE-17
+    - Server Runtime should be Tomcatv10.1
 - Set up a new MySQL Workbench connection using the following credentials:
   - Hostname: awseb-e-bybgza4twa-stack-awsebrdsdatabase-57j2ooqi4tt8.cxocrl7z2rgw.us-east-2.rds.amazonaws.com
   - Username: root
