@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="../css/style.css">
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <meta charset="UTF-8">
 <title>Welcome</title>
@@ -12,17 +13,17 @@
 			<script> alert("Please Login or Register to Complete Your Purchase") </script>
 		<%} %>
 		
-		<h3>User Name</h3>
-		<input type='text' name='email'>Enter Email</input>
-		<h3>Pass Word</h3>
-		<input type='password' name='password'>Enter Password</input>
+		<h3>Email</h3>
+		<input class="text-input-1"type='text' name='email' placeholder="Enter Email Here"></input>
+		<h3>Password</h3>
+		<input class="text-input-1" type='password' name='password' placeholder="Enter Password Here"></input>
 		
 		<div id='login-signup'>
-		<input type='submit' name='user-action' value='login'>Login</input>
-		<input type='submit' name='user-action' value='signup'>SignUp</input>
-		
+			<input class="button-1" role="button" type='submit' name='user-action' value='login'></input>
+			<input class="button-1" role="button" type='submit' name='user-action' value='signup'></input>
+			<input class="button-1" role="button" type='submit' name='user-action' value='guest'></input>
 		</div>
-		<input type='submit' name='user-action' value='guest'>Continue as guest</input>
+
 		<input type='checkbox' name='adminPage' value='go'>Admin View</input>
 	
 	</form>
