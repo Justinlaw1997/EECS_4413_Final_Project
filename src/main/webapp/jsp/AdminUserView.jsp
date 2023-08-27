@@ -11,6 +11,13 @@
 	</head>
 	
 	<body>
+		<%if(request.getAttribute("delete-current")!=null){ %>
+				<script> alert("Can't delete a logged in user") </script>
+		<%} %>
+		<%if(request.getAttribute("update-current")!=null){ %>
+				<script> alert("Can't change status for a logged in use") </script>
+		<%} %>
+		
 		<h2>Manage Users</h2>
 	 
         <!-- Switch Views or Log Out -->

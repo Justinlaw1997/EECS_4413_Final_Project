@@ -130,7 +130,7 @@ public class AdminServlet extends HttpServlet {
 				User loggedIn = (User) request.getSession().getAttribute("user");
 				User deleteUser = userDao.findUserById(Integer.parseInt(request.getParameter("delete")));
 				if (loggedIn.getId() == deleteUser.getId()) {
-					JOptionPane.showMessageDialog(null, "Can't delete a logged in user");
+					request.setAttribute("delete-current", "delete-current");
 				} else {
 					userDao.removeUser(deleteUser);
 				}
@@ -141,7 +141,7 @@ public class AdminServlet extends HttpServlet {
 				User loggedIn = (User) request.getSession().getAttribute("user");
 				User deleteUser = userDao.findUserById(Integer.parseInt(request.getParameter("status")));
 				if (loggedIn.getId() == deleteUser.getId()) {
-					JOptionPane.showMessageDialog(null, "Can't change status for a logged in user");
+					request.setAttribute("update-current", "update-current");
 				} else {
 					userDao.changeUserStatus(Integer.parseInt(request.getParameter("status")));
 				}
