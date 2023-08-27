@@ -16,18 +16,7 @@ public class Item implements Serializable {
 	private int quantityPurchased;
 	private String image;
 	
-	public Item(String itemID, String name, String description, Category category, Brand brand, int price, int quantityStocked, int quantityPurchased, String image) {
-		super();
-		this.itemID = itemID;
-		this.name = name;
-		this.description = description;
-		this.category = category;
-		this.brand = brand;
-		this.price = price;
-		this.quantityStocked = quantityStocked;
-		this.quantityPurchased = quantityPurchased;
-		this.image = image;
-	}
+	public Item() {}
 	
 	public String getItemID() {
 		return itemID;

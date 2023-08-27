@@ -140,7 +140,9 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {			
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Category category = new Category(id, name);				
+				Category category = new Category();
+				category.setId(id);
+				category.setName(name);
 				result.add(category);
 			}
 			
@@ -167,7 +169,9 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {			
 				int id = resultSet.getInt("id");
 				String name = resultSet.getString("name");
-				Brand brand = new Brand(id, name);				
+				Brand brand = new Brand();
+				brand.setId(id);
+				brand.setName(name);
 				result.add(brand);
 			}
 			
@@ -207,11 +211,15 @@ public class ItemDAOImpl implements ItemDAO {
 			while(resultSet.next()) {		
 				int categoryId = resultSet.getInt(8);
 				String categoryName = resultSet.getString(9);
-				Category category = new Category(categoryId, categoryName);
+				Category category = new Category();
+				category.setId(categoryId);
+				category.setName(categoryName);
 				
 				int brandId = resultSet.getInt(10);
 				String brandName = resultSet.getString(11);
-				Brand brand = new Brand(brandId, brandName);
+				Brand brand = new Brand();
+				brand.setId(brandId);
+				brand.setName(brandName);				
 				
 				String itemId = resultSet.getString("itemID");
 				String itemName = resultSet.getString("name");
@@ -221,7 +229,17 @@ public class ItemDAOImpl implements ItemDAO {
 				int quantityPurchased = 0;
 				String image = "images/" + itemId + ".jpg";
 
-				Item item = new Item(itemId, itemName, description, category, brand, price, quantityStocked, quantityPurchased, image);				
+				Item item = new Item();		
+				item.setItemID(itemId);
+				item.setName(itemName);
+				item.setImage(description);
+				item.setCategory(category);
+				item.setBrand(brand);
+				item.setPrice(price);
+				item.setQuantityStocked(quantityStocked);
+				item.setQuantityPurchased(quantityPurchased);
+				item.setImage(image);
+				
 				result.add(item);
 			}
 			
