@@ -21,13 +21,13 @@
          <p><b>Brand:</b> ${item.getBrand().getName()}</p> 
          <p><b>Quantity In Stock:</b> ${item.getQuantityStocked()}</p> 
 		
-		<form method='get' action='/CartServlet'>
+		<form method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
   			<input type='text' size='4' value='1' name='qty${item.getItemID()}'>
         	<input type="submit" value="Add to Cart" />
         	<input type='hidden' name='todo' value='add' />
         	<input type='hidden' name='singleId' value='${item.getItemID()}' />
         </form><br>
-		<form method='get' action='/CatalogServlet'>
+		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 		     <input type="submit" value="Return to Item Catalog" />
         </form>
 

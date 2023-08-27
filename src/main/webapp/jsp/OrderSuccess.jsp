@@ -38,6 +38,6 @@
        </table>
 	
 	<%-- Button to return to the catalog page --%>
-	<p><a href='/CatalogServlet'>Continue shopping...</a></p>
+	<p><a href='/EECS4413FinalProjectJLI/CatalogServlet'>Continue shopping...</a></p>
 </body>
 </html>

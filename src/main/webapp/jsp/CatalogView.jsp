@@ -13,7 +13,7 @@
 	
 		<%-- Output conditional options depending if User or Guest --%>
 		<div class="login_options" id="forms">
-			<form id="login_form_item" method='get' action='/CartServlet'>
+			<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
 				<input class="button-1" role="button" type="submit" value="Go to Cart" />
 				<input class="button-1" role="button" type='hidden' name='todo' value='view' />
 			</form>
@@ -21,17 +21,17 @@
 			
 				<%-- Display 'View Orders' and 'Log Out' if User --%>
 				<c:when test="${sessionScope.user != null}">
-					<form id="login_form_item"method='get' action='/CustomerOrderServlet'>
+					<form id="login_form_item"method='get' action='/EECS4413FinalProjectJLI/CustomerOrderServlet'>
 						<input  class="button-1" role="button" type="submit" value="View Orders" />
 					</form>
-					<form id="login_form_item" method='get' action='/LogOutServlet'>
+					<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>
 						<input   class="button-1" role="button" type="submit" value="Log Out" />
 					</form>
 				</c:when>
 				
 				<%-- Display 'Log In' if Guest --%>
 				<c:otherwise>
-					<form id="login_form_item" method='get' action='/jsp/welcome.jsp'>
+					<form id="login_form_item" method='get' action='/EECS4413FinalProjectJLI/jsp/welcome.jsp'>
 						<input class="button-1" role="button" type="submit" value='Log In' />
 					</form>
 				</c:otherwise>
@@ -46,7 +46,7 @@
 				<p>Sort by: </p>
 			</div>
 			<div id="sort_bar_item">
-			<form method='get' action='/CatalogServlet'>
+			<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 	       		<input class="button-2" role="button" type="submit" name="sort" value="All" />
 				<input class="button-2" role="button" type="submit" name="sort" value="Prices: Ascending" />
 				<input class="button-2" role="button" type="submit" name="sort" value="Prices: Descending" />
@@ -56,7 +56,7 @@
 		</div>
 
 		<%-- Output categories drowndown --%>
-		<form method='get' action='/CatalogServlet'>
+		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="categories">Sort by Category: </label>
 	     			<select name="categories" id="categories">
    				        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -68,7 +68,7 @@
 		</form>
 		
 		<%-- Output brands drowndown --%>
-		<form method='get' action='/CatalogServlet'>
+		<form method='get' action='/EECS4413FinalProjectJLI/CatalogServlet'>
 			<label for="brands">Sort by Brand: </label>
 	     			<select name="brands" id="brands">
    				        <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -80,7 +80,7 @@
 		</form>
 
 
-        <form id='table-form' method='get' action='/CartServlet'>
+        <form id='table-form' method='get' action='/EECS4413FinalProjectJLI/CartServlet'>
         
 	        <table border='1' cellpadding='6'>
 		        <tr>
@@ -103,7 +103,7 @@
 					 <td> ${item.getBrand().getName()} </td>
 			         <td> $ ${item.getPrice()} </td>
 			         <td><input class='cart-update' type='text' size='4' value='1' name='qty${item.getItemID()}'></td>
-			         <td><a class='link-button' href='/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
+			         <td><a class='link-button' href='/EECS4413FinalProjectJLI/ItemServlet?itemID=${item.getItemID()}'>Details</a></td>
 				 </tr>
 				 </c:forEach>
 		

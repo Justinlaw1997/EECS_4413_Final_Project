@@ -11,7 +11,7 @@
 	</head>
 <body>
 	<h2>Credit Card Authorization Failed! Please try again</h2>
-	<form method='get' action='/CheckoutServlet'>
+	<form method='get' action='/EECS4413FinalProjectJLI/CheckoutServlet'>
 	<input class='button-2' role='button' type='submit' value='Try again' />
 	</form>
 </body>
