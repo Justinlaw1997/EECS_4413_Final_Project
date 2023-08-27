@@ -26,6 +26,8 @@
 			<input class="button-1" role="button" type='submit' name='user-action' value='signup'></input>
 			<input class="button-1" role="button" type='submit' name='user-action' value='guest'></input>
 		</div>
+		
+		<input type='checkbox' name='adminPage' value='go'>Admin View</input>
 	
 	</form>
 </body>
