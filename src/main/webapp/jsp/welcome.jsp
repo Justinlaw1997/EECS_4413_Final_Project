@@ -16,17 +16,17 @@
 		<%} %>
 		
 		<h3>User Name</h3>
-		<input type='text' name='email'>Enter Email</input>
+		<input type='text' name='email'>Enter Email
 		<h3>Pass Word</h3>
-		<input type='password' name='password'>Enter Password</input>
+		<input type='password' name='password'>Enter Password
 		
 		<div id='login-signup'>
-		<input type='submit' name='user-action' value='login'>Login</input>
-		<input type='submit' name='user-action' value='signup'>SignUp</input>
+		<input type='submit' name='user-action' value='login'>Login
+		<input type='submit' name='user-action' value='signup'>SignUp
 		
 		</div>
-		<input type='submit' name='user-action' value='guest'>Continue as guest</input>
-		<input type='checkbox' name='adminPage' value='go'>Admin View</input>
+		<input type='submit' name='user-action' value='guest'>Continue as guest
+		<input type='checkbox' name='adminPage' value='go'>Admin View
 	
 	</form>
 </body>

@@ -13,13 +13,12 @@ import java.util.List;
 import model.Brand;
 import model.Category;
 import model.Item;
-import java.util.logging.*;
 
 public class ItemDAOImpl implements ItemDAO {
 	
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-	      Logger logger= Logger.getLogger(ItemDAOImpl.class.getName());
+
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
