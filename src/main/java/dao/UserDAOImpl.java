@@ -23,7 +23,6 @@ public class UserDAOImpl implements UserDAO {
 
 	private Connection getConnection() throws SQLException {
 		Connection con = null;
-	      Logger logger= Logger.getLogger(UserDAOImpl.class.getName());
 		if (System.getProperty("RDS_HOSTNAME") != null) {
 			try {
 		      Class.forName("com.mysql.jdbc.Driver");
@@ -32,14 +31,12 @@ public class UserDAOImpl implements UserDAO {
 		      String hostname = System.getProperty("RDS_HOSTNAME");
 		      String port = System.getProperty("RDS_PORT");
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
-		      logger.info("Getting remote connection with connection string from environment variables.");
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 		    } catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }
 		    return con;
 		}else {
@@ -53,12 +50,11 @@ public class UserDAOImpl implements UserDAO {
 		      String port = "3306";
 		      String jdbcUrl = "jdbc:mysql://" + hostname + ":" + port + "/" + "db" + "?user=" + userName + "&password=" + password;
 		      con = DriverManager.getConnection(jdbcUrl);
-		      logger.info("Remote connection successful.");
 		      return con;
 			}catch (ClassNotFoundException e) { 
-		    	logger.warning(e.toString());
+		    	System.out.println(e.toString());
 		    }catch (SQLException e) { 
-		    	logger.warning(e.toString());
+		    	e.printStackTrace();
 		    }		      
 		}
 		return con;

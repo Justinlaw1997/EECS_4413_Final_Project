@@ -8,8 +8,11 @@
 </head>
 <body>
 	<form method='get' action='/EECS4413FinalProjectJLI/LoginServlet'>
-		<%if(request.getAttribute("error")=="no user"){ %>
-			<script> alert("Please Login or Register to Complete Your Purchase") </script>
+		<%if(request.getAttribute("no-user")!=null){ %>
+				<script> alert("User does not exist!") </script>
+		<%} %>
+		<%if(request.getAttribute("incrpass")!=null){ %>
+				<script> alert("Incorrect Password!") </script>
 		<%} %>
 		
 		<h3>User Name</h3>
