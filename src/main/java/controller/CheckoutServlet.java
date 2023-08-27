@@ -34,7 +34,7 @@ public class CheckoutServlet extends HttpServlet {
 		RequestDispatcher rd;
 		
 		if (session.getAttribute("user") == null) {
-	    	request.setAttribute("error", "no user");
+	    	request.setAttribute("not-logged-in", "not-logged-in");
 			rd = request.getRequestDispatcher("jsp/welcome.jsp");
 			rd.include(request, response);
 	    } else {	    	

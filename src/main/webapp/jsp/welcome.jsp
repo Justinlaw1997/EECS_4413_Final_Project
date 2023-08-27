@@ -16,6 +16,9 @@
 		<%if(request.getAttribute("incrpass")!=null){ %>
 				<script> alert("Incorrect Password!") </script>
 		<%} %>
+		<%if(request.getAttribute("not-logged-in")!=null){ %>
+				<script> alert("You must be logged in to make a purchase") </script>
+		<%} %>
 		
 		<h3>Email</h3>
 		<input class="text-input-1"type='text' name='email' placeholder="Enter Email Here"></input>
