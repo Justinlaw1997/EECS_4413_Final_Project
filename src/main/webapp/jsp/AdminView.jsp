@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="ISO-8859-1">
 		<title>Admin Page</title>
-		<link href="css/style.css" rel="stylesheet">
+		<link href="css/adminStyle.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -15,14 +15,14 @@
 		
 		<!-- Log Out Button -->
 		<form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
-       		<input type="submit" name="selection" value="Log Out" />
+       		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
 		
 		<!-- Output selections for the Admin -->
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="selection" value="Manage Items" />
-       		<input type="submit" name="selection" value="Manage Orders" />
-       		<input type="submit" name="selection" value="Manage Users" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Items" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Orders" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Users" />
 		</form>
 	
 	</body>

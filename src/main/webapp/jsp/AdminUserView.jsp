@@ -7,7 +7,7 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>Admin User Page</title>
-		<link href="css/style.css" rel="stylesheet">
+		<link href="css/adminStyle.css" rel="stylesheet">
 	</head>
 	
 	<body>
@@ -15,19 +15,19 @@
 	 
         <!-- Switch Views or Log Out -->
         <form method='get' action='/EECS4413FinalProjectJLI/LogOutServlet'>	
-       		<input type="submit" name="selection" value="Log Out" />
+       		<input type="submit" class="button-1" name="selection" value="Log Out" />
 		</form><br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="selection" value="Manage Items" />
-       		<input type="submit" name="selection" value="Manage Orders" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Items" />
+       		<input type="submit" class="button-1" name="selection" value="Manage Orders" />
        	</form><br>
 		
 		<!-- Filtering options -->
 		<br> Filter Users:<br>
 		<form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-       		<input type="submit" name="filterUsers" value="View All" />
-       		<input type="submit" name="filterUsers" value="View Customers" />
-       		<input type="submit" name="filterUsers" value="View Admins" />
+       		<input type="submit" class="button-1" name="filterUsers" value="View All" />
+       		<input type="submit" class="button-1" name="filterUsers" value="View Customers" />
+       		<input type="submit" class="button-1" name="filterUsers" value="View Admins" />
        		<input type="hidden" name="selection" value="Manage Users" />
 		</form><br>
 		
@@ -47,38 +47,40 @@
 	      
 	        <c:forEach items="${requestScope.users}" var="user">
 				 <tr>
-					 <td> ${user.getId()} </td>
-					 <td> ${user.getEmail()} </td>
-					 <td> ${user.getFirstName()} </td>
-					 <td> ${user.getLastName()} </td>
+					 <td><p> ${user.getId()} </p></td>
+					 <td><p> ${user.getEmail()} </p></td>
+					 <td><p> ${user.getFirstName()} </p></td>
+					 <td><p> ${user.getLastName()} </p></td>
 					 
 					 <!-- Parse the Address -->
 					 <td> 
-					 	${user.getAddress().getStreetAddress()}, 
-					 	${user.getAddress().getProvince()}, 
-					 	${user.getAddress().getCountry()}, 
-					 	${user.getAddress().getPostalCode()}  
+					 	<p>
+						 	${user.getAddress().getStreetAddress()}, 
+						 	${user.getAddress().getProvince()}, 
+						 	${user.getAddress().getCountry()}, 
+						 	${user.getAddress().getPostalCode()}  
+					 	</p>
 					 </td>
-					 <td>${user.getAddress().getPhone()}</td>
+					 <td><p>${user.getAddress().getPhone()}</p></td>
 					 
 					 <!-- Display User Status based on boolean -->
 					 <c:choose>
 					 	<c:when test="${user.getIsAdmin()=='1'}">
-					 		<td>Admin</td>
+					 		<td><p>Admin</p></td>
 					 	</c:when>
 					 	<c:otherwise>
-					 		<td>Customer</td>
+					 		<td><p>Customer</p></td>
 					 	</c:otherwise>
 					 </c:choose>
 					 
 					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-					 	<input type="submit" value="Change" />
+					 	<input type="submit" class="button-1" value="Change" />
 					 	<input type="hidden" name="selection" value="Manage Users" />
 					 	<input type="hidden" name="status" value="${user.getId()}" />
 					 </form></td>
 					 
 					 <td><form method='get' action='/EECS4413FinalProjectJLI/AdminServlet'>
-					 	<input type="submit" value="Delete" />
+					 	<input type="submit" class="button-1" value="Delete" />
 					 	<input type="hidden" name="selection" value="Manage Users" />
 					 	<input type="hidden" name="delete" value="${user.getId()}" />
 					 </form></td>
